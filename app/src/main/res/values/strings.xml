@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">SchoolApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_sign_up_acitivity">SignUpAcitivity</string>
+    <string name="facebook_app_id">955041747884194</string>
+    <string name="title_activity_landing_page">LandingPageActivity</string>
+    <string name="signup">Don\'t have an account?</string>
+    <string name="title_activity_login_page">LoginPageActivity</string>
+    <string name="title_activity_sign_up_page">SignUpPageActivity</string>
+    <string name="title_activity_spalsh_screen">SpalshScreenActivity</string>
+    <string name="title_activity_registration">RegistrationActivity</string>
+    <!--<string name="firebase_url"></string>-->
+</resources>
