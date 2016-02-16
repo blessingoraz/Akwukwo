@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -35,25 +37,29 @@ public class LoginActivity extends AppCompatActivity {
         String email = mUserLoginEmail.getText().toString();
         String password = mUserLoginPassword.getText().toString();
 
-
-        ref.addValueEventListener(new ValueEventListener() {
-
+        ref.authWithPassword(email, password, new Firebase.AuthResultHandler() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-
-                for (DataSnapshot userSnapShot: snapshot.getChildren()) {
-                    System.out.println("++++++++++++++++++"+userSnapShot.getKey());
-
-                    UserDetails details = userSnapShot.getValue(UserDetails.class);
-//
-                    System.out.println("==================" + details.name);
-                }
-
+            public void onAuthenticated(AuthData authData) {
+                Toast.makeText(LoginActivity.this, authData.getProviderData().get("name").toString(), Toast.LENGTH_SHORT).show();
             }
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
 
-                System.out.println("The read failed: " + firebaseError.getMessage());
+            @Override
+            public void onAuthenticationError(FirebaseError firebaseError) {
+
+                switch (firebaseError.getCode()) {
+                    case FirebaseError.USER_DOES_NOT_EXIST:
+                        // handle a non existing user
+                        Toast.makeText(LoginActivity.this, "User does not exist", Toast.LENGTH_SHORT).show();
+
+                        break;
+                    case FirebaseError.INVALID_PASSWORD:
+                        // handle an invalid password
+                        Toast.makeText(LoginActivity.this, "Password is incorrect", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        // handle other errors
+                        break;
+                }
             }
         });
 

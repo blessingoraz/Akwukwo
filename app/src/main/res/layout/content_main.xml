@@ -9,39 +9,49 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 
-    <com.facebook.login.widget.LoginButton
+    <!--<com.facebook.login.widget.LoginButton-->
+        <!--android:id="@+id/signUpButton"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_marginTop="20dp"/>-->
+
+    <Button
         android:id="@+id/signUpButton"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"/>
-
-    <Button
-        android:id="@+id/sign_in_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/signUpButton"
-        android:layout_centerHorizontal="true"
-        android:text="Google signIn"/>
+        android:layout_marginTop="20dp"
+        android:text="Facebook Signin"/>
 
 <Button
-    android:id="@+id/email_button"
-    android:layout_width="fill_parent"
+    android:id="@+id/sign_in_button"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/sign_in_button"
+    android:layout_below="@+id/signUpButton"
     android:layout_centerHorizontal="true"
-    android:text="Login"
-    android:textAllCaps="false"/>
+    android:text="Google signIn"/>
+
+<Button
+android:id="@+id/email_button"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:layout_below="@+id/sign_in_button"
+android:layout_centerHorizontal="true"
+android:text="Login"
+android:textAllCaps="false"/>
 
 <TextView
-    android:id="@+id/open_login_page"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/email_button"
-    android:text="@string/signup"
-    android:textSize="15sp"
-    android:onClick="signUpPage"/>
+android:id="@+id/open_login_page"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_below="@+id/email_button"
+android:text="@string/signup"
+android:textSize="15sp"
+android:onClick="signUpPage"/>
 
 </RelativeLayout>

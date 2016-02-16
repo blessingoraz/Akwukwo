@@ -9,5 +9,6 @@
     <string name="title_activity_sign_up_page">SignUpPageActivity</string>
     <string name="title_activity_spalsh_screen">SpalshScreenActivity</string>
     <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="title_activity_view_page">ViewPageActivity</string>
     <!--<string name="firebase_url"></string>-->
 </resources>

@@ -2,7 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hk.ust.cse.comp107x.schoolapp" >
 
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -15,6 +20,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBzpOSmpwkGXcTW0mA11xSQ7OkkbAzvUDM"/>
+
         <activity
             android:name=".LandingPages.MainActivity"
             android:label="@string/app_name"
@@ -26,10 +44,6 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
 
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
-
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -39,14 +53,6 @@
             android:name=".LandingPages.LandingPageActivity"
             android:label="@string/title_activity_landing_page"
             android:theme="@style/AppTheme.NoActionBar" >
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-
         </activity>
         <activity
             android:name=".LandingPages.LoginActivity"
@@ -66,6 +72,11 @@
         <activity
             android:name=".RegistrationActivity"
             android:label="@string/title_activity_registration"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".ViewPageActivity"
+            android:label="@string/title_activity_view_page"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>

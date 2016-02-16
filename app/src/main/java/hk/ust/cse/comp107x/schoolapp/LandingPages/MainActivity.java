@@ -23,6 +23,9 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.firebase.client.AuthData;
@@ -40,7 +43,11 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
 
 import hk.ust.cse.comp107x.schoolapp.Constants;
 import hk.ust.cse.comp107x.schoolapp.R;
@@ -67,9 +74,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     private static final int RC_SIGN_IN = 0;
 
-    private LoginButton mFacebookLogin;
     private Button mGoogleLogin;
     private Button mEmailLogin;
+    private Button mFacebookLogin;
 
     private static final int DIALOG_PLAY_SERVICES_ERROR = 0;
 
@@ -91,6 +98,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+
+        if(callbackManager.onActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
+
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
             case RC_SIGN_IN:
@@ -116,7 +129,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(this);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         Firebase.setAndroidContext(this);
         ref = new Firebase(Constants.FIREBASE_URL);
@@ -126,11 +140,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         setSupportActionBar(toolbar);
 
         callbackManager = CallbackManager.Factory.create();
-        mFacebookLogin = (LoginButton) findViewById(R.id.signUpButton);
         mEmailLogin = (Button) findViewById(R.id.email_button);
 
         mGoogleApiClient = buildApiClient();
         mGoogleLogin = (Button) findViewById(R.id.sign_in_button);
+
+        mFacebookLogin = (Button) findViewById(R.id.signUpButton);
 
         mGoogleLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,24 +165,79 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         });
 
         // Facebook Login
-        mFacebookLogin.setReadPermissions(LOGIN_PERMISSIONS_FB);
-        mFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                AccessToken token = loginResult.getAccessToken();
-                onFacebookAccessTokenChange(token);
-            }
 
-            @Override
-            public void onCancel() {
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(final LoginResult loginResult) {
+                        Log.d("Success", "Login");
 
-            }
+                        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
 
-            @Override
-            public void onError(FacebookException error) {
+                                        if (response != null) {
+                                            try {
+                                                JSONObject data = response.getJSONObject();
 
-            }
-        });
+                                               AccessToken token = loginResult.getAccessToken();
+
+                                                onFacebookAccessTokenChange(token);
+//
+//                                                JSONObject picutre = data.getJSONObject("picture");
+//                                                JSONObject innerData = picutre.getJSONObject("data");
+//                                                picturefacebook = innerData.getString("url");
+//                                                Log.e("All:", "Name: " + nameFacebook + "\nId " + idFacebook + "\npicture: " + picturefacebook + "\n"
+//                                                        + "Token: " + User.getContent(GoogleFacebook.this, "facebookToken", "facebookToken"));
+//                                                String fbToken = User.getContent(GoogleFacebook.this, "facebookToken", "facebookToken");
+//                                                String emailStr = (email == null) ? "email@email.com" : email;
+//                                                String provider = "facebook";
+//                                                User.saveContent("email", emailStr, GoogleFacebook.this, "email");
+//                                                User.saveContent("photo", picturefacebook, GoogleFacebook.this, "photo");
+//                                                User.saveContent("firstname", nameFacebook.split(" ")[0], GoogleFacebook.this, "firstname");
+//                                                User.saveContent("lastname", nameFacebook.split(" ")[1], GoogleFacebook.this, "lastname");
+//                                                makeVolleyRequest(fbToken, nameFacebook, emailStr, idFacebook, picturefacebook.replace("\\", ""), provider);
+//                        if(data.has ("picture")){
+//                          Log.e("ImageUrl", data.getString ("picture").replace ("\\", ""));
+//                          Toast.makeText (getApplicationContext (), data.getString ("picture"), Toast.LENGTH_LONG).show ();
+//                        }
+//                        Log.e ("data: ", response+"");
+                                            } catch (Exception ex) {
+                                                ex.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "name,id,email,gender,picture,birthday");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(MainActivity.this, "Login Cancel", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        Toast.makeText(MainActivity.this, "I am working hahahha", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                mFacebookLogin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                            ArrayList<String> permissions = new ArrayList<>();
+                            permissions.add("public_profile");
+                            permissions.add("user_friends");
+                            permissions.add("email");
+                            LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, permissions);
+
+
+                    }
+                });
     }
 
     public void onFacebookAccessTokenChange(AccessToken loginToken) {
@@ -180,45 +250,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 @Override
                 public void onAuthenticated(AuthData authData) {
 
-                    String picture = authData.getProviderData().get("cachedUserProfile").toString();
+                    Toast.makeText(MainActivity.this, "+++++++++++" + authData, Toast.LENGTH_SHORT).show();
+//
+//                    String picture = authData.getProviderData().get("cachedUserProfile").toString();
 
                     final UserDetails details = new UserDetails();
                     details.name = authData.getProviderData().get("displayName").toString();
                     details.id = authData.getUid();
-                    details.email = authData.getProviderData().get("email").toString();
+
+                    String emailAvailable = authData.getProviderData().get("email").toString();
+                    details.email = (emailAvailable == null) ? "email@email.com" : emailAvailable;;
                     details.accessToken = authData.getToken();
 
-                    ref.addValueEventListener(new ValueEventListener() {
-
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-
-                            for (DataSnapshot userSnapShot : snapshot.getChildren()) {
-
-                                UserDetails userDetails = userSnapShot.getValue(UserDetails.class);
-
-                                System.out.println("====================" + details.name);
-
-                                System.out.println("++++++++++++++++++++" + userDetails.name);
-//
-                                if ((details.name == userDetails.name) && (details.email == userDetails.email)) {
-
-                                    Toast.makeText(MainActivity.this, Constants.USERNAME_EXISTS, Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
-
-                            System.out.println("The read failed: " + firebaseError.getMessage());
-                        }
-                    });
-
-                    userRef.push().setValue(details);
+                    userRef.child(authData.getUid()).setValue(details);
 
                     if(authData != null) {
                         Intent in = new Intent(MainActivity.this, RegistrationActivity.class);
@@ -234,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
                 @Override
                 public void onAuthenticationError(FirebaseError firebaseError) {
-                    System.out.println("An error has occured" + firebaseError);
+                    System.out.println("An error has occurred" + firebaseError);
 
                 }
             });
@@ -341,26 +385,26 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
                 final Firebase userRef = ref.child("users");
 
-                if (token != null) {
 
-                    if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+                if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
 
-                        Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+                    Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
-                        UserDetails details = new UserDetails();
-                        details.name = currentPerson.getDisplayName();
-                        details.email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-                        details.accessToken = token;
+                    System.out.println("Checking if google login works ========>" + currentPerson);
+                    final UserDetails details = new UserDetails();
+                    details.name = currentPerson.getDisplayName();
+                    details.email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+                    details.accessToken = token;
 
-                        userRef.push().setValue(details);
+                    userRef.child(currentPerson.getId()).setValue(details);
 
-                        startActivity(new Intent(MainActivity.this, LandingPageActivity.class));
+                    startActivity(new Intent(MainActivity.this, RegistrationActivity.class));
 //                        Person.Image personPhoto = currentPerson.getImage ();
 //                        String personGooglePlusProfile = currentPerson.getUrl ();
 //                        String formatedImagePhoto = String.valueOf (personPhoto).replace ("\\","");
 
-                    }
                 }
+
             }
         };
         task.execute();
@@ -406,6 +450,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void onConnected(Bundle bundle) {
         //life is changing alot is happening
         //we wanna get the token here when the baga connects
+
+        System.out.println("WHat is inside bundle =====> " + bundle);
         try {
             loginAndGetToken ();
             Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();

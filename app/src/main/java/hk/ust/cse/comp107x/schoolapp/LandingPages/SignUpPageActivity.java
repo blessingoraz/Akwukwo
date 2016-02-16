@@ -1,18 +1,28 @@
 package hk.ust.cse.comp107x.schoolapp.LandingPages;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import hk.ust.cse.comp107x.schoolapp.Constants;
 import hk.ust.cse.comp107x.schoolapp.R;
+import hk.ust.cse.comp107x.schoolapp.RegistrationActivity;
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
+import hk.ust.cse.comp107x.schoolapp.ViewPageActivity;
 
 public class SignUpPageActivity extends AppCompatActivity {
 
@@ -44,32 +54,69 @@ public class SignUpPageActivity extends AppCompatActivity {
         Firebase ref = new Firebase(Constants.FIREBASE_URL);
         final Firebase userRef = ref.child("users");
 
-        String email = mUserEmail.getText().toString();
-        String name = mUserName.getText().toString();
-        String password = mUserPassword.getText().toString();
+        final String email = mUserEmail.getText().toString();
+        final String name = mUserName.getText().toString();
+        final String password = mUserPassword.getText().toString();
 
-        editor.putString("email", email);
-        editor.putString("password", password);
+        ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
 
-        UserDetails details = new UserDetails();
-        details.name = name;
-        details.email = email;
-        details.password = password;
+                UserDetails userDetails = new UserDetails();
 
-        userRef.push().setValue(details);
+                userDetails.name = name;
+                userDetails.email = email;
+                userDetails.password = password;
 
-//        userRef.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
-//            @Override
-//            public void onSuccess(Map<String, Object> result) {
-//                System.out.println("Successfully created user account with uid: " + result.get("uid"));
-//            }
+                String uid = (String) result.get("uid");
+
+                userRef.child(uid).setValue(userDetails);
+                Log.i("USer details", result.toString());
+                alertDialog();
+            }
+
+            @Override
+            public void onError(FirebaseError firebaseError) {
+                Toast.makeText(SignUpPageActivity.this, "Username or password already exists", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+//        editor.putString("email", email);
+//        editor.putString("password", password);
 //
-//            @Override
-//            public void onError(FirebaseError firebaseError) {
-//                // there was an error
-//            }
-//        });
+//        UserDetails details = new UserDetails();
+//        details.name = name;
+//        details.email = email;
+//        details.password = password;
+//
+//        userRef.push().setValue(details);
 
-        startActivity(new Intent(SignUpPageActivity.this, LandingPageActivity.class));
+    }
+
+//    public
+    public void alertDialog() {
+        AlertDialog.Builder builder = new android.app.AlertDialog.Builder(SignUpPageActivity.this);
+        builder.setTitle("Do you want to register a school?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(SignUpPageActivity.this, RegistrationActivity.class));
+
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(SignUpPageActivity.this, ViewPageActivity.class));
+
+            }
+        });
+
+
+        builder.create();
+        builder.show();
     }
 }
