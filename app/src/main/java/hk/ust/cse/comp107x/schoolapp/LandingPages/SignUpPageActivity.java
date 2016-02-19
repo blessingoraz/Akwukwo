@@ -12,8 +12,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +24,7 @@ import hk.ust.cse.comp107x.schoolapp.Constants;
 import hk.ust.cse.comp107x.schoolapp.R;
 import hk.ust.cse.comp107x.schoolapp.RegistrationActivity;
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
+import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 import hk.ust.cse.comp107x.schoolapp.ViewPageActivity;
 
 public class SignUpPageActivity extends AppCompatActivity {
@@ -29,6 +32,8 @@ public class SignUpPageActivity extends AppCompatActivity {
     private TextView mUserName;
     private TextView mUserPassword;
     private TextView mUserEmail;
+    Firebase ref = new Firebase(Constants.FIREBASE_URL);
+    final Firebase userRef = ref.child("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,51 +52,94 @@ public class SignUpPageActivity extends AppCompatActivity {
 
     public void signUp(View view) {
 
-        SharedPreferences pref = getSharedPreferences("UserDetails", MODE_PRIVATE);
+        if(Utils.isOnLine(SignUpPageActivity.this)) {
 
-        SharedPreferences.Editor editor = pref.edit();
+            SharedPreferences pref = getSharedPreferences("UserDetails", MODE_PRIVATE);
 
-        Firebase ref = new Firebase(Constants.FIREBASE_URL);
-        final Firebase userRef = ref.child("users");
+            final SharedPreferences.Editor editor = pref.edit();
 
-        final String email = mUserEmail.getText().toString();
-        final String name = mUserName.getText().toString();
-        final String password = mUserPassword.getText().toString();
+            final String email = mUserEmail.getText().toString().trim();
+            final String name = mUserName.getText().toString().trim();
+            final String password = mUserPassword.getText().toString().trim();
 
-        ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
+            if(email.equals("")) {
+                mUserEmail.setError("This field is required");
+            }
+
+            else if(name.equals("")) {
+                mUserName.setError("This field is required");
+            }
+            else if(password.equals("")) {
+                mUserPassword.setError("This field is required");
+            }
+
+            else if(!isPasswordValid(password)) {
+                mUserPassword.setError( "Password is too short" );
+                mUserPassword.setHint("input password");
+            }
+
+            else if(!(email.equals("")) && !(name.equals("")) && !(password.equals(""))) {
+
+                ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
+                    @Override
+                    public void onSuccess(Map<String, Object> result) {
+
+                        UserDetails userDetails = new UserDetails();
+                        userDetails.name = name;
+                        userDetails.email = email;
+                        userDetails.password = password;
+
+                        String uid = (String) result.get("uid");
+
+                        editor.putString(Constants.USER_TOKEN, uid);
+
+                        editor.apply();
+
+                        compareEmail(userDetails, userDetails.email, uid);
+
+                        alertDialog();
+                    }
+
+                    @Override
+                    public void onError(FirebaseError firebaseError) {
+                        Toast.makeText(SignUpPageActivity.this, "Email already exists or incorrect", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        } else {
+            Utils.showLongMessage(Constants.CHECK_CONNECTION, SignUpPageActivity.this);
+        }
+
+    }
+
+    public void compareEmail(final UserDetails userDetails, final String emailFromUserDetail, final String userdetailUid) {
+
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onSuccess(Map<String, Object> result) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                UserDetails userDetails = new UserDetails();
+                for (DataSnapshot users : dataSnapshot.getChildren()) {
 
-                userDetails.name = name;
-                userDetails.email = email;
-                userDetails.password = password;
+                    String email = (String) users.child("users").child("email").getValue();
 
-                String uid = (String) result.get("uid");
-
-                userRef.child(uid).setValue(userDetails);
-                Log.i("USer details", result.toString());
-                alertDialog();
+                    if (emailFromUserDetail.trim().equalsIgnoreCase(email)) {
+                        Utils.showShortToast("Email already exist!", SignUpPageActivity.this);
+                    } else {
+                        userRef.child(userdetailUid).setValue(userDetails);
+                    }
+                }
             }
 
             @Override
-            public void onError(FirebaseError firebaseError) {
-                Toast.makeText(SignUpPageActivity.this, "Username or password already exists", Toast.LENGTH_SHORT).show();
+            public void onCancelled(FirebaseError firebaseError) {
+
             }
         });
 
+    }
 
-//        editor.putString("email", email);
-//        editor.putString("password", password);
-//
-//        UserDetails details = new UserDetails();
-//        details.name = name;
-//        details.email = email;
-//        details.password = password;
-//
-//        userRef.push().setValue(details);
-
+    private boolean isPasswordValid(String password) {
+        return password.length() > 3;
     }
 
 //    public
@@ -119,4 +167,10 @@ public class SignUpPageActivity extends AppCompatActivity {
         builder.create();
         builder.show();
     }
+
+    public void loginPage(View view) {
+        startActivity(new Intent(SignUpPageActivity.this, LoginActivity.class));
+    }
+
+
 }

@@ -1,7 +1,9 @@
 package hk.ust.cse.comp107x.schoolapp.LandingPages;
 
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.media.MediaActionSound;
@@ -53,6 +55,8 @@ import hk.ust.cse.comp107x.schoolapp.Constants;
 import hk.ust.cse.comp107x.schoolapp.R;
 import hk.ust.cse.comp107x.schoolapp.RegistrationActivity;
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
+import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
+import hk.ust.cse.comp107x.schoolapp.ViewPageActivity;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -86,10 +90,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     // facebook dependencies
     CallbackManager callbackManager;
-    AccessTokenTracker accessTokenTracker;
-    TextView register;
-    AccessToken accessToken;
-
     Firebase ref;
 
     private static final String[] LOGIN_PERMISSIONS_FB = new String[]{"email"};
@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -136,8 +137,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         ref = new Firebase(Constants.FIREBASE_URL);
 
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         callbackManager = CallbackManager.Factory.create();
         mEmailLogin = (Button) findViewById(R.id.email_button);
@@ -170,7 +169,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(final LoginResult loginResult) {
-                        Log.d("Success", "Login");
 
                         GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
                                 new GraphRequest.GraphJSONObjectCallback() {
@@ -179,30 +177,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
                                         if (response != null) {
                                             try {
-                                                JSONObject data = response.getJSONObject();
 
                                                AccessToken token = loginResult.getAccessToken();
 
                                                 onFacebookAccessTokenChange(token);
-//
-//                                                JSONObject picutre = data.getJSONObject("picture");
-//                                                JSONObject innerData = picutre.getJSONObject("data");
-//                                                picturefacebook = innerData.getString("url");
-//                                                Log.e("All:", "Name: " + nameFacebook + "\nId " + idFacebook + "\npicture: " + picturefacebook + "\n"
-//                                                        + "Token: " + User.getContent(GoogleFacebook.this, "facebookToken", "facebookToken"));
-//                                                String fbToken = User.getContent(GoogleFacebook.this, "facebookToken", "facebookToken");
-//                                                String emailStr = (email == null) ? "email@email.com" : email;
-//                                                String provider = "facebook";
-//                                                User.saveContent("email", emailStr, GoogleFacebook.this, "email");
-//                                                User.saveContent("photo", picturefacebook, GoogleFacebook.this, "photo");
-//                                                User.saveContent("firstname", nameFacebook.split(" ")[0], GoogleFacebook.this, "firstname");
-//                                                User.saveContent("lastname", nameFacebook.split(" ")[1], GoogleFacebook.this, "lastname");
-//                                                makeVolleyRequest(fbToken, nameFacebook, emailStr, idFacebook, picturefacebook.replace("\\", ""), provider);
-//                        if(data.has ("picture")){
-//                          Log.e("ImageUrl", data.getString ("picture").replace ("\\", ""));
-//                          Toast.makeText (getApplicationContext (), data.getString ("picture"), Toast.LENGTH_LONG).show ();
-//                        }
-//                        Log.e ("data: ", response+"");
+
                                             } catch (Exception ex) {
                                                 ex.printStackTrace();
                                             }
@@ -222,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
                     @Override
                     public void onError(FacebookException exception) {
-                        Toast.makeText(MainActivity.this, "I am working hahahha", Toast.LENGTH_LONG).show();
+                        Utils.showLongMessage(Constants.CHECK_CONNECTION, MainActivity.this);
                     }
                 });
 
@@ -244,48 +223,43 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         final Firebase userRef = ref.child("users");
 
-        if(loginToken != null) {
+            if(loginToken != null) {
 
-            ref.authWithOAuthToken("facebook", loginToken.getToken(), new Firebase.AuthResultHandler() {
-                @Override
-                public void onAuthenticated(AuthData authData) {
+                ref.authWithOAuthToken("facebook", loginToken.getToken(), new Firebase.AuthResultHandler() {
+                    @Override
+                    public void onAuthenticated(AuthData authData) {
 
-                    Toast.makeText(MainActivity.this, "+++++++++++" + authData, Toast.LENGTH_SHORT).show();
-//
-//                    String picture = authData.getProviderData().get("cachedUserProfile").toString();
+                        final UserDetails details = new UserDetails();
+                        details.name = authData.getProviderData().get("displayName").toString();
+                        details.id = authData.getUid();
 
-                    final UserDetails details = new UserDetails();
-                    details.name = authData.getProviderData().get("displayName").toString();
-                    details.id = authData.getUid();
+                        String emailAvailable = authData.getProviderData().get("email").toString();
+                        details.email = (emailAvailable == null) ? "email@email.com" : emailAvailable;;
+                        details.accessToken = authData.getToken();
 
-                    String emailAvailable = authData.getProviderData().get("email").toString();
-                    details.email = (emailAvailable == null) ? "email@email.com" : emailAvailable;;
-                    details.accessToken = authData.getToken();
+                        userRef.child(authData.getUid()).setValue(details);
 
-                    userRef.child(authData.getUid()).setValue(details);
+                        if(authData != null) {
+                            alertDialog();
+                        }
 
-                    if(authData != null) {
-                        Intent in = new Intent(MainActivity.this, RegistrationActivity.class);
-                        startActivity(in);
-                    }
-
-                    else {
-                        Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_LONG).show();
-                    }
+                        else {
+                            Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_LONG).show();
+                        }
 //                    userDetails.put("profile", picture.get))
-                    //We are already logged in and we can go to Landing Page
-                }
+                        //We are already logged in and we can go to Landing Page
+                    }
 
-                @Override
-                public void onAuthenticationError(FirebaseError firebaseError) {
-                    System.out.println("An error has occurred" + firebaseError);
+                    @Override
+                    public void onAuthenticationError(FirebaseError firebaseError) {
+                        System.out.println("An error has occurred" + firebaseError);
 
-                }
-            });
+                    }
+                });
 
-        } else {
-            ref.unauth();
-        }
+            } else {
+                ref.unauth();
+            }
 
     }
 
@@ -390,7 +364,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
                     Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
-                    System.out.println("Checking if google login works ========>" + currentPerson);
                     final UserDetails details = new UserDetails();
                     details.name = currentPerson.getDisplayName();
                     details.email = Plus.AccountApi.getAccountName(mGoogleApiClient);
@@ -398,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
                     userRef.child(currentPerson.getId()).setValue(details);
 
-                    startActivity(new Intent(MainActivity.this, RegistrationActivity.class));
+                    alertDialog();
 //                        Person.Image personPhoto = currentPerson.getImage ();
 //                        String personGooglePlusProfile = currentPerson.getUrl ();
 //                        String formatedImagePhoto = String.valueOf (personPhoto).replace ("\\","");
@@ -408,6 +381,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         };
         task.execute();
+    }
+
+    public void alertDialog() {
+        AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Do you want to register a school?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(MainActivity.this, RegistrationActivity.class));
+
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(MainActivity.this, ViewPageActivity.class));
+
+            }
+        });
+
+
+        builder.create();
+        builder.show();
     }
 
     public void signUpPage(View view) {
@@ -451,12 +449,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         //life is changing alot is happening
         //we wanna get the token here when the baga connects
 
-        System.out.println("WHat is inside bundle =====> " + bundle);
         try {
             loginAndGetToken ();
             Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         }catch (Exception e){
-            e.printStackTrace ();
+            e.printStackTrace();
         }
     }
 

@@ -10,38 +10,58 @@
     tools:showIn="@layout/activity_sign_up_acitivity"
     tools:context="hk.ust.cse.comp107x.schoolapp.LandingPages.LoginActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LOGIN WITH EMAIL"
+        android:textScaleX="1.15"
+        android:layout_marginBottom="39dp"
+        android:layout_above="@+id/user_email_login"
+        android:layout_toStartOf="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
 
     <EditText
         android:id="@+id/user_email_login"
-        android:layout_width="fill_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="Email "
         android:layout_centerInParent="true"
-        android:inputType="textEmailAddress"/>
+        android:inputType="textEmailAddress"
+        android:textSize="15sp"/>
 
     <EditText
         android:id="@+id/user_password_login"
-        android:layout_width="fill_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/user_email_login"
         android:hint="Password"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:textSize="15sp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/user_email_login"
+        android:layout_alignStart="@+id/user_email_login" />
 
     <Button
         android:id="@+id/login_user"
-        android:layout_width="fill_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:layout_below="@+id/user_password_login"
         android:textAllCaps="false"
-        android:onClick="login"/>
+        android:onClick="login"
+        android:layout_below="@+id/user_password_login"
+        android:layout_alignStart="@+id/user_password_login"
+        android:layout_marginTop="50dp"
+        android:background="#31C3D6"
+        android:textColor="#ffffff"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Forgot password?"
+        android:onClick="forgotPassword"
+        android:id="@+id/textView"
         android:layout_below="@+id/login_user"
-        android:layout_alignParentEnd="true"
-        android:onClick="forgotPassword"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textStyle="italic"/>
 
 </RelativeLayout>

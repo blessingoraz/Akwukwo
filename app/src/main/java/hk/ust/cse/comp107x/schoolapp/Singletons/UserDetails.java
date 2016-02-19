@@ -10,6 +10,13 @@ public class UserDetails {
     public String id;
     public String name;
     public String password;
+    public Boolean contain(String value) {
+        if (value.equals(email) || value.equals(accessToken) || value.equals(id) || value.equals(name) || value.equals(password)) {
+            return true;
+        }
+        return false;
+    }
+
 
 
 }

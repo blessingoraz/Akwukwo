@@ -10,32 +10,84 @@
     tools:showIn="@layout/activity_sign_up_page"
     tools:context="hk.ust.cse.comp107x.schoolapp.LandingPages.SignUpPageActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SIGN UP WITH EMAIL"
+        android:layout_marginBottom="52dp"
+        android:layout_above="@+id/user_name"
+        android:layout_centerHorizontal="true"
+        android:textScaleX="1.15"/>
+
     <EditText
         android:id="@+id/user_name"
-        android:layout_width="fill_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:hint="Name"/>
+        android:hint="Name"
+        android:textSize="15sp" />
+
     <EditText
         android:id="@+id/user_email"
-        android:layout_width="fill_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="Email "
-        android:layout_below="@+id/user_name"/>
+        android:layout_below="@+id/user_name"
+        android:layout_alignStart="@+id/user_name"
+        android:layout_marginTop="26dp"
+        android:textSize="15sp"
+        android:inputType="textEmailAddress"/>
 
     <EditText
         android:id="@+id/user_password"
-        android:layout_width="fill_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:hint="Password"
         android:layout_below="@+id/user_email"
-        android:hint="Password"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:textSize="15dp"
+        android:inputType="textPassword"/>
 
     <Button
-        android:layout_width="fill_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="Register"
-        android:layout_below="@+id/user_password"
         android:textAllCaps="false"
-        android:onClick="signUp"/>
+        android:onClick="signUp"
+        android:id="@+id/button"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/linearLayout2"
+        android:layout_centerHorizontal="true"
+        android:background="#31C3D6"
+        android:textColor="#ffffff"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/linearLayout2">
+
+        <TextView
+            android:id="@+id/open_login_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already have an account"
+            android:textSize="15sp"
+            android:textColor="#000000"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="login"
+            android:textAllCaps="false"
+            android:background="#ffffff"
+            android:textColor="#E44939"
+            android:layout_marginLeft="20dp"
+            android:onClick="loginPage"/>
+    </LinearLayout>
 
 </RelativeLayout>

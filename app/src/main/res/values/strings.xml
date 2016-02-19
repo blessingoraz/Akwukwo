@@ -10,5 +10,7 @@
     <string name="title_activity_spalsh_screen">SpalshScreenActivity</string>
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="title_activity_view_page">ViewPageActivity</string>
+    <string name="title_activity_reset_password">ResetPasswordActivity</string>
+    <string name="title_activity_no_internet">NoInternetActivity</string>
     <!--<string name="firebase_url"></string>-->
 </resources>

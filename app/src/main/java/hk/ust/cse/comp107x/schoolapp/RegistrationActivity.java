@@ -4,6 +4,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -32,6 +33,7 @@ public class RegistrationActivity extends AppCompatActivity implements
     SupportMapFragment mapFragment;
     public static FragmentManager fragmentManager;
     private LocationManager locationManager;
+    private Boolean exit = false;
 
     private GoogleApiClient.ConnectionCallbacks mConnectionCallbacks = new GoogleApiClient.ConnectionCallbacks() {
         @Override
@@ -56,6 +58,22 @@ public class RegistrationActivity extends AppCompatActivity implements
         googleApiClient.connect();
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(exit) {
+            finish();
+        } else {
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+        }
+        super.onBackPressed();
     }
 
     //builgoogle API
