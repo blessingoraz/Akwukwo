@@ -1,16 +1,9 @@
 package hk.ust.cse.comp107x.schoolapp.Singletons;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.Toast;
-
-import hk.ust.cse.comp107x.schoolapp.LandingPages.SignUpPageActivity;
-import hk.ust.cse.comp107x.schoolapp.RegistrationActivity;
-import hk.ust.cse.comp107x.schoolapp.ViewPageActivity;
 
 /**
  * Created by blessingorazulume on 2/17/16.

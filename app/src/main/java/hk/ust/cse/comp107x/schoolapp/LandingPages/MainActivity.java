@@ -6,21 +6,17 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.media.MediaActionSound;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -29,12 +25,9 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.firebase.client.AuthData;
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -45,7 +38,6 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -59,8 +51,6 @@ import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 import hk.ust.cse.comp107x.schoolapp.ViewPageActivity;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-
-
 
     public static final int RC_GOOGLE_LOGIN = 1;
     private boolean mGoogleIntentInProgress;
@@ -82,11 +72,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private Button mEmailLogin;
     private Button mFacebookLogin;
 
+    private ProgressDialog mProgress;
+
     private static final int DIALOG_PLAY_SERVICES_ERROR = 0;
 
     private GoogleApiClient mGoogleApiClient;
 
     private static final String TAG = "signin1";
+
+    SharedPreferences preferences;
 
     // facebook dependencies
     CallbackManager callbackManager;
@@ -175,14 +169,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                                     @Override
                                     public void onCompleted(JSONObject object, GraphResponse response) {
 
+                                        mProgress = ProgressDialog.show(MainActivity.this,"",getString(R.string.loading), true, false);
                                         if (response != null) {
                                             try {
+
+                                                if (mProgress != null)
+                                                    mProgress.dismiss();
 
                                                AccessToken token = loginResult.getAccessToken();
 
                                                 onFacebookAccessTokenChange(token);
 
                                             } catch (Exception ex) {
+
+                                                if (mProgress != null)
+                                                    mProgress.dismiss();
+
                                                 ex.printStackTrace();
                                             }
                                         }
@@ -196,11 +198,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
                     @Override
                     public void onCancel() {
+
+                        if (mProgress != null)
+                            mProgress.dismiss();
                         Toast.makeText(MainActivity.this, "Login Cancel", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
+
+                        if (mProgress != null)
+                            mProgress.dismiss();
+
                         Utils.showLongMessage(Constants.CHECK_CONNECTION, MainActivity.this);
                     }
                 });
@@ -221,6 +230,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     public void onFacebookAccessTokenChange(AccessToken loginToken) {
 
+        preferences = getSharedPreferences("UserDetails", MODE_PRIVATE);
+
+        final SharedPreferences.Editor editor = preferences.edit();
+
         final Firebase userRef = ref.child("users");
 
             if(loginToken != null) {
@@ -240,6 +253,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         userRef.child(authData.getUid()).setValue(details);
 
                         if(authData != null) {
+
+                            String uid = authData.getUid();
+
+                            editor.putString(Constants.USER_TOKEN, uid);
+
+                            editor.apply();
+
                             alertDialog();
                         }
 
@@ -357,6 +377,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             @Override
             protected void onPostExecute(final String token) {
 
+                preferences = getSharedPreferences("UserDetails", MODE_PRIVATE);
+
+                final SharedPreferences.Editor editor = preferences.edit();
+
+
                 final Firebase userRef = ref.child("users");
 
 
@@ -370,6 +395,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     details.accessToken = token;
 
                     userRef.child(currentPerson.getId()).setValue(details);
+
+                    String uid = currentPerson.getId();
+
+                    editor.putString(Constants.USER_TOKEN, uid);
+
+                    editor.apply();
 
                     alertDialog();
 //                        Person.Image personPhoto = currentPerson.getImage ();
@@ -420,20 +451,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     public GoogleApiClient buildApiClient(){
         return new GoogleApiClient.Builder(this)

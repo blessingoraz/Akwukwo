@@ -17,6 +17,21 @@ public class UserDetails {
         return false;
     }
 
+    public String schoolName;
+    public String address;
+    public String motto;
+    public String schoolImage;
+    public String vision;
+    public String fees;
+    public String level;
+    public String phone;
+    public String schoolEmail;
+    public String detailedAddress;
+    public String latitude;
+    public String longitude;
 
+    public UserDetails() {
+
+    }
 
 }

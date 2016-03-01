@@ -1,13 +1,12 @@
 package hk.ust.cse.comp107x.schoolapp.LandingPages;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +16,6 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import hk.ust.cse.comp107x.schoolapp.Constants;
@@ -35,12 +33,11 @@ public class SignUpPageActivity extends AppCompatActivity {
     Firebase ref = new Firebase(Constants.FIREBASE_URL);
     final Firebase userRef = ref.child("users");
 
+    private ProgressDialog mProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_page);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         Firebase.setAndroidContext(this);
 
@@ -80,14 +77,19 @@ public class SignUpPageActivity extends AppCompatActivity {
 
             else if(!(email.equals("")) && !(name.equals("")) && !(password.equals(""))) {
 
+                mProgress = ProgressDialog.show(SignUpPageActivity.this, "", getString(R.string.loading), true, false);
                 ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
                     @Override
                     public void onSuccess(Map<String, Object> result) {
+
+                        if (mProgress != null)
+                            mProgress.dismiss();
 
                         UserDetails userDetails = new UserDetails();
                         userDetails.name = name;
                         userDetails.email = email;
                         userDetails.password = password;
+                        userDetails.accessToken = (String) result.get("uid");
 
                         String uid = (String) result.get("uid");
 
@@ -102,6 +104,10 @@ public class SignUpPageActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(FirebaseError firebaseError) {
+
+                        if (mProgress != null)
+                            mProgress.dismiss();
+
                         Toast.makeText(SignUpPageActivity.this, "Email already exists or incorrect", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -123,6 +129,7 @@ public class SignUpPageActivity extends AppCompatActivity {
                     String email = (String) users.child("users").child("email").getValue();
 
                     if (emailFromUserDetail.trim().equalsIgnoreCase(email)) {
+
                         Utils.showShortToast("Email already exist!", SignUpPageActivity.this);
                     } else {
                         userRef.child(userdetailUid).setValue(userDetails);

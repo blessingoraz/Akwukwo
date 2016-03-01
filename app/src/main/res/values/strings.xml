@@ -12,5 +12,12 @@
     <string name="title_activity_view_page">ViewPageActivity</string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
     <string name="title_activity_no_internet">NoInternetActivity</string>
+    <string name="title_activity_registration_complete">RegistrationCompleteActivity</string>
+    <string name="title_activity_search_location">SearchLocationActivity</string>
+    <string name="title_activity_show_image">ShowImage</string>
+    <string name="title_activity_list_of_my_schhols">ListOfMySchhols</string>
+    <string name="title_activity_users_account">UsersAccountActivity</string>
+    <string name="title_activity_detail_of_each_school">DetailOfEachSchool</string>
+    <string name="loading">loading...</string>
     <!--<string name="firebase_url"></string>-->
 </resources>

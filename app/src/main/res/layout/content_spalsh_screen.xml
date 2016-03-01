@@ -13,39 +13,11 @@
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/edu_icon"
-        android:layout_marginTop="165dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/icon"
-        android:layout_marginTop="60dp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SCHOOLFINDER"
-            android:textColor="#EFF6F5"
-            android:textStyle="bold"
-            android:textSize="24sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="App"
-            android:textColor="#EFF6F5"
-            android:textSize="24sp"
-            android:layout_marginLeft="8dp"/>
-
-    </LinearLayout>
+        android:src="@drawable/logo1"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,6 +25,7 @@
         android:textColor="#ffffff"
         android:text="FindSchool © All rights reserved."
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView5" />
 
 </RelativeLayout>

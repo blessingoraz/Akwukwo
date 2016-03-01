@@ -1,5 +1,6 @@
 package hk.ust.cse.comp107x.schoolapp.LandingPages;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +29,7 @@ import hk.ust.cse.comp107x.schoolapp.ViewPageActivity;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText mUserLoginEmail, mUserLoginPassword;
+    private ProgressDialog mProgress;
     Firebase ref;
     SharedPreferences pref;
 
@@ -36,8 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_acitivity);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        Firebase.setAndroidContext(this);
 
         mUserLoginEmail = (EditText) findViewById(R.id.user_email_login);
         mUserLoginPassword = (EditText) findViewById(R.id.user_password_login);
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(Utils.isOnLine(LoginActivity.this)) {
 
+            mProgress = ProgressDialog.show(LoginActivity.this, "", getString(R.string.loading), true, false);
             ref = new Firebase(Constants.FIREBASE_URL_USERS);
             String email = mUserLoginEmail.getText().toString();
             String password = mUserLoginPassword.getText().toString();
@@ -60,12 +63,18 @@ public class LoginActivity extends AppCompatActivity {
             ref.authWithPassword(email, password, new Firebase.AuthResultHandler() {
                 @Override
                 public void onAuthenticated(AuthData authData) {
-                    Toast.makeText(LoginActivity.this, ""+authData, Toast.LENGTH_SHORT).show();
+
+                    if (mProgress != null)
+                        mProgress.dismiss();
+
                     startActivity(new Intent(LoginActivity.this, ViewPageActivity.class));
                 }
 
                 @Override
                 public void onAuthenticationError(FirebaseError firebaseError) {
+
+                    if (mProgress != null)
+                        mProgress.dismiss();
 
                     switch (firebaseError.getCode()) {
                         case FirebaseError.USER_DOES_NOT_EXIST:
