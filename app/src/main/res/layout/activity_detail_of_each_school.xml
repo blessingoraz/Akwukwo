@@ -29,6 +29,7 @@
             android:layout_marginTop="20dp">
 
             <ImageView
+                android:id="@+id/school_image_from_firebase"
                 android:layout_weight="3"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
@@ -86,12 +87,14 @@
             android:layout_marginTop="140dp">
 
             <TextView
+                android:id="@+id/school_address_from_firebase"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="25, olori-mango road bh hjuu hhj jj"/>
 
 
             <TextView
+                android:id="@+id/school_phone_number_from_firebase"
                 android:layout_weight="10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -130,12 +133,14 @@
             android:layout_marginTop="230dp">
 
             <TextView
+                android:id="@+id/school_fees_range_from_firebase"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="5000 - 10000"/>
 
 
             <TextView
+                android:id="@+id/school_email_from_firebase"
                 android:layout_weight="10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -148,6 +153,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginStart="130dp"
+
             android:layout_marginTop="260dp">
 
             <TextView

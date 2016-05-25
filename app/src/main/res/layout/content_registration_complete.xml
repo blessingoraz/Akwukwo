@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#E9E9E9"
+        android:background="#cccccc"
         android:id="@+id/linearLayout3"
         android:layout_marginTop="50dp">
 
@@ -76,7 +76,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/photo"
+            android:src="@drawable/vision"
             android:layout_marginTop="30dp"/>
 
         <EditText
@@ -86,7 +86,10 @@
             android:hint="Vision"
             android:textSize="15sp"
             android:layout_marginTop="20dp"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"/>
 
     </RelativeLayout>
 
@@ -100,7 +103,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/tel"
+            android:src="@drawable/fee"
             android:layout_marginTop="25dp"/>
 
         <TextView
@@ -108,7 +111,7 @@
             android:layout_height="wrap_content"
             android:text="Fees per Term"
             android:id="@+id/textView4"
-            android:layout_marginEnd="39dp"
+            android:layout_marginEnd="30dp"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/spinner_for_fees" />
 
@@ -131,7 +134,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/tel"
+            android:src="@drawable/level"
             android:layout_marginTop="10dp"
             android:id="@+id/imageView3" />
 
@@ -139,7 +142,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Level"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="22dp"
             android:layout_toEndOf="@+id/imageView3"
             android:layout_alignTop="@+id/imageView3"
             android:layout_alignBottom="@+id/imageView3" />
@@ -191,7 +194,10 @@
             android:textSize="15sp"
             android:layout_marginTop="20dp"
             android:layout_alignParentEnd="true"
-            android:inputType="phone"/>
+            android:inputType="phone"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"/>
 
     </RelativeLayout>
 
@@ -216,7 +222,10 @@
             android:textSize="15sp"
             android:layout_marginTop="20dp"
             android:layout_alignParentEnd="true"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"/>
 
     </RelativeLayout>
 
@@ -230,7 +239,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/email"
+            android:src="@drawable/address"
             android:layout_marginTop="30dp"/>
 
         <EditText
@@ -241,7 +250,10 @@
             android:textSize="15sp"
             android:layout_marginTop="20dp"
             android:layout_alignParentEnd="true"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"/>
 
     </RelativeLayout>
 

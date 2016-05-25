@@ -25,7 +25,10 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:hint="Name"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/user_email"
@@ -36,7 +39,10 @@
         android:layout_alignStart="@+id/user_name"
         android:layout_marginTop="26dp"
         android:textSize="15sp"
-        android:inputType="textEmailAddress"/>
+        android:inputType="textEmailAddress"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/user_password"
@@ -47,7 +53,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
         android:textSize="15dp"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:singleLine="true"/>
 
     <Button
         android:layout_width="300dp"

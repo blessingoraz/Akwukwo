@@ -9,6 +9,7 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -50,7 +51,7 @@ import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 import hk.ust.cse.comp107x.schoolapp.ViewPageActivity;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public static final int RC_GOOGLE_LOGIN = 1;
     private boolean mGoogleIntentInProgress;
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private GoogleApiClient mGoogleApiClient;
 
     private static final String TAG = "signin1";
+    private Boolean exit = false;
 
     SharedPreferences preferences;
 
@@ -87,6 +89,28 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     Firebase ref;
 
     private static final String[] LOGIN_PERMISSIONS_FB = new String[]{"email"};
+
+    private GoogleApiClient.ConnectionCallbacks mConnectionCallbacks = new GoogleApiClient.ConnectionCallbacks() {
+        @Override
+        public void onConnected(Bundle bundle) {
+//            Toast.makeText(LandingPage.this, R.string.gp_connected, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onConnectionSuspended(int i) {
+//            Toast.makeText(LandingPage.this, R.string.gp_disconnected, Toast.LENGTH_SHORT).show();
+        }
+    };
+
+
+    @Override
+    public void onBackPressed() {
+
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -124,8 +148,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
 
         Firebase.setAndroidContext(this);
         ref = new Firebase(Constants.FIREBASE_URL);
@@ -257,6 +279,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                             String uid = authData.getUid();
 
                             editor.putString(Constants.USER_TOKEN, uid);
+                            editor.putString(Constants.USER_NAME, authData.getProviderData().get("displayName").toString());
+                            editor.putString(Constants.USER_EMAIL,emailAvailable );
 
                             editor.apply();
 
@@ -399,6 +423,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     String uid = currentPerson.getId();
 
                     editor.putString(Constants.USER_TOKEN, uid);
+                    editor.putString(Constants.USER_NAME,currentPerson.getDisplayName());
+                    editor.putString(Constants.USER_EMAIL, Plus.AccountApi.getAccountName(mGoogleApiClient));
 
                     editor.apply();
 

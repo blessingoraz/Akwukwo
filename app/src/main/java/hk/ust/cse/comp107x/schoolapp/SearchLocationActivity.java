@@ -51,6 +51,10 @@ public class SearchLocationActivity extends FragmentActivity implements GoogleAp
     AutoCompleteTextView mSearchLocation;
     private PlaceAutocompleteAdapter mAdapter;
 
+    public void cancel(View view) {
+
+        mSearchLocation.setText("");
+    }
     public void getLocation(View view) {
 
         SharedPreferences preferences = getSharedPreferences("Location", Context.MODE_PRIVATE);

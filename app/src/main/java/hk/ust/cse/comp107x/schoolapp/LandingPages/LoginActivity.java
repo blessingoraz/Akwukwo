@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -43,6 +44,24 @@ public class LoginActivity extends AppCompatActivity {
 
         mUserLoginEmail = (EditText) findViewById(R.id.user_email_login);
         mUserLoginPassword = (EditText) findViewById(R.id.user_password_login);
+
+        mUserLoginPassword.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode){
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            Utils.hideSoftKeyboard(LoginActivity.this);
+                            return true;
+                        default:
+                            break;
+                    }
+
+                }
+                return false;
+            }
+        });
 
         pref = getSharedPreferences("Email", Context.MODE_PRIVATE);
 
@@ -102,20 +121,13 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+
     @Override
     public void onBackPressed() {
-        if(exit) {
-            finish();
-        } else {
-            exit = true;
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    exit = false;
-                }
-            }, 3 * 1000);
-        }
-        super.onBackPressed();
+
+        finish();
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
     public void forgotPassword(View view) {

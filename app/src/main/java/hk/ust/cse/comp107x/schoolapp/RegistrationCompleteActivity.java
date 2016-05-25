@@ -23,6 +23,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -30,6 +31,8 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 
@@ -41,7 +44,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import hk.ust.cse.comp107x.schoolapp.LandingPages.LoginActivity;
+import hk.ust.cse.comp107x.schoolapp.LandingPages.SignUpPageActivity;
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 
@@ -58,8 +65,24 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
     private EditText mEmail;
     private EditText mDetailedAddress;
     String fileName;
+    SharedPreferences pref;
 
     Firebase ref;
+
+    public static final String VALID_PHONE_NUMBER_REGEX = "\\(\\d{3}\\)-\\d{3}-\\d{4}";
+
+    public static boolean validatePhoneNumber(String phoneString) {
+        boolean isValid = phoneString.matches(VALID_PHONE_NUMBER_REGEX);
+        return isValid;
+    }
+
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+    public static boolean validate(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +90,17 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration_complete);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.arrow);
+//        toolbar.setSubtitle("Order details");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(RegistrationCompleteActivity.this, RegistrationActivity.class));
+            }
+        });
 
         Firebase.setAndroidContext(this);
         ref = new Firebase(Constants.FIREBASE_URL);
@@ -76,70 +110,154 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
         mPhoneNumber = (EditText) findViewById(R.id.school_phone_number);
         mEmail = (EditText) findViewById(R.id.school_email);
         mDetailedAddress = (EditText) findViewById(R.id.school_detailed_address);
-
         mSchoolImage = (ImageView) findViewById(R.id.school_image);
-
         mFeesRange = (Spinner) findViewById(R.id.spinner_for_fees);
 
         mChooseFees = new ArrayList<String>();
-
         mChooseFees.add("-- select fees range --");
-        mChooseFees.add("N5000 - N10000");
-        mChooseFees.add("N5000 - N10000");
-        mChooseFees.add("N5000 - N10000");
-        mChooseFees.add("N5000 - N10000");
-        mChooseFees.add("N5000 - N10000");
+        mChooseFees.add("N10000 - N20000");
+        mChooseFees.add("N20000 - N30000");
+        mChooseFees.add("N30000 - N40000");
+        mChooseFees.add("N40000 - N50000");
+        mChooseFees.add("N50000 - N60000");
 
         mAdapterForFees = new ArrayAdapter<String>(RegistrationCompleteActivity.this,
                 android.R.layout.simple_spinner_item, mChooseFees);
 
         mAdapterForFees.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         mFeesRange.setAdapter(mAdapterForFees);
+
+        mDetailedAddress.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode){
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            Utils.hideSoftKeyboard(RegistrationCompleteActivity.this);
+                            return true;
+                        default:
+                            break;
+                    }
+
+                }
+                return false;
+            }
+        });
+
+
+        pref = getSharedPreferences("EachSchool", Context.MODE_PRIVATE);
+
+//        setupElementValues();
+        mSchoolImage.setImageBitmap(Utils.decodeBase64(pref.getString(Constants.SCHOOL_IMAGE, "")));
+        mSchoolVision.setText(pref.getString(Constants.SCHOOL_VISION, ""));
+        mEmail.setText(pref.getString(Constants.SCHOOL_EMAIL, ""));
+        mPhoneNumber.setText(pref.getString(Constants.SCHOOL_PHONE, ""));
+        mDetailedAddress.setText(pref.getString(Constants.SCHOOL_ADDRESS, ""));
+
     }
 
     public void registerSchool(View view) {
 
-        String vision = mSchoolVision.getText().toString();
+        if(Utils.isOnLine(RegistrationCompleteActivity.this)) {
 
-        int selectedLevel = mSchoolLevel.getCheckedRadioButtonId();
-        mSelectedLevel = (RadioButton) findViewById(selectedLevel);
-        String level = mSelectedLevel.getText().toString();
+            if(Utils.isEmpty(mSchoolVision.getText().toString().trim())) {
 
-        String fees = mFeesRange.getSelectedItem().toString();
-        String phonenumber = mPhoneNumber.getText().toString();
-        String email = mEmail.getText().toString();
-        String detailedAddress = mDetailedAddress.getText().toString();
+                mSchoolVision.setError("This field is required");
+                return;
+            }
 
-        SharedPreferences preferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
-        SharedPreferences preferences1 = getSharedPreferences("Locations", Context.MODE_PRIVATE);
+//            else if(mPhoneNumber.getText().toString().trim().equals("") || validatePhoneNumber(mPhoneNumber.getText().toString().trim()) == false) {
+//
+//                mPhoneNumber.setError("Phone number is either invalid or not provided");
+//                return;
+//            }
 
-        String name = preferences.getString(Constants.SCHOOL_NAME, "");
-        String address = preferences.getString(Constants.SCHOOL_ADDRESS, "");
-        String motto = preferences.getString(Constants.SCHOOL_MOTTO, "");
-        String id = preferences.getString(Constants.USER_TOKEN, "");
-        String image = preferences.getString(Constants.SCHOOL_IMAGE, "");
+            else if(Utils.isEmpty(mEmail.getText().toString().trim()) || validate(mEmail.getText().toString().trim()) == false) {
 
-        UserDetails details = new UserDetails();
+                mEmail.setError("Email is either invalid or not provided");
 
-        details.schoolName = name;
-        details.address = address;
-        details.motto = motto;
-        details.vision = vision;
-        details.fees = fees;
-        details.level = level;
-        details.phone = phonenumber;
-        details.schoolEmail = email;
-        details.schoolImage = image;
-        details.detailedAddress = detailedAddress;
-        details.latitude = preferences1.getString("latitude", "");
-        details.longitude = preferences1.getString("longitude", "");
+            }
+
+            else if(Utils.isEmpty(mDetailedAddress.getText().toString().trim())) {
+
+                mDetailedAddress.setError("This field is required");
+                return;
+            }
+
+            else if(mSchoolImage.getDrawable() == null) {
+
+                Utils.showShortToast("select an image of the school", RegistrationCompleteActivity.this);
+            }
+
+            else if(mFeesRange.getSelectedItem().toString().trim().equals("-- select fees range --")) {
+                Utils.showShortToast("select fees range", RegistrationCompleteActivity.this);
+                return;
+            }
+
+            else if (Utils.isNotEmpty(mSchoolVision.getText().toString().trim()) && Utils.isNotEmpty(mPhoneNumber.getText().toString().trim()) &&
+                    Utils.isNotEmpty(mDetailedAddress.getText().toString().trim()) && Utils.isNotEmpty(mEmail.getText().toString().trim())) {
+
+                String vision = mSchoolVision.getText().toString();
+
+                int selectedLevel = mSchoolLevel.getCheckedRadioButtonId();
+                mSelectedLevel = (RadioButton) findViewById(selectedLevel);
+                String level = mSelectedLevel.getText().toString();
+
+                String fees = mFeesRange.getSelectedItem().toString();
+                String phonenumber = mPhoneNumber.getText().toString();
+                String email = mEmail.getText().toString();
+                String detailedAddress = mDetailedAddress.getText().toString();
+
+                SharedPreferences preferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+                SharedPreferences preferences1 = getSharedPreferences("Location", Context.MODE_PRIVATE);
+
+                String name = preferences.getString(Constants.SCHOOL_NAME, "");
+                String address = preferences.getString(Constants.SCHOOL_ADDRESS, "");
+                String motto = preferences.getString(Constants.SCHOOL_MOTTO, "");
+                String id = preferences.getString(Constants.USER_TOKEN, "");
+                String image = preferences.getString(Constants.SCHOOL_IMAGE, "");
+
+                UserDetails details = new UserDetails();
+
+                details.schoolName = name;
+                details.address = address;
+                details.motto = motto;
+                details.vision = vision;
+                details.fees = fees;
+                details.level = level;
+                details.phone = phonenumber;
+                details.schoolEmail = email;
+                details.schoolImage = image;
+                details.detailedAddress = detailedAddress;
+                details.latitude = preferences1.getString("latitude", "");
+                details.longitude = preferences1.getString("longitude", "");
 
 
-        ref.child("users").child(id).child("schools").push().setValue(details);
-        ref.child("schools").push().setValue(details);
+                if(pref.getString(Constants.SCHOOL_ID, "").equals("")) {
 
-        startActivity(new Intent(RegistrationCompleteActivity.this, ListOfMySchhols.class));
+                    ref.child("users").child(id).child("schools").push().setValue(details);
+                    ref.child("schools").push().setValue(details);
+
+                } else {
+
+                    String schoolId = pref.getString(Constants.SCHOOL_ID, "");
+                    ref.child("users").child(id).child("schools").child(schoolId).setValue(details);
+
+                    //change the id to the id from view activity.
+//                    SharedPreferences preferences2 = getSharedPreferences()
+//                    String AllSchoolId =
+                    ref.child("schools").child(schoolId).setValue(details);
+                }
+
+                startActivity(new Intent(RegistrationCompleteActivity.this, ListOfMySchhols.class));
+            }
+
+
+        } else {
+
+            Utils.showLongMessage(Constants.CHECK_CONNECTION, RegistrationCompleteActivity.this);
+        }
 
 
     }
@@ -191,7 +309,7 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
                 Uri selectedImage = data.getData();
 
                 // TODO Do something with the select image URI
-                  fileName = compressImage(selectedImage);
+                fileName = compressImage(selectedImage);
 
                 try {
 
@@ -207,7 +325,7 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
                 }
             }
     }
-
+    //Compressing image
     public String compressImage(Uri imageUri) {
 
         String filePath = getRealPathFromURI(imageUri);
@@ -218,6 +336,7 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
 //      by setting this field as true, the actual bitmap pixels are not loaded in the memory. Just the bounds are loaded. If
 //      you try the use the bitmap here, you will get null.
         options.inJustDecodeBounds = true;
+
         Bitmap bmp = BitmapFactory.decodeFile(filePath, options);
 
         int actualHeight = options.outHeight;
@@ -225,8 +344,8 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
 
 //      max Height and width values of the compressed image is taken as 816x612
 
-        float maxHeight = 816.0f;
-        float maxWidth = 612.0f;
+        float maxHeight = 300.0f;
+        float maxWidth = 150.0f;
         float imgRatio = actualWidth / actualHeight;
         float maxRatio = maxWidth / maxHeight;
 

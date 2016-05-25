@@ -27,7 +27,8 @@
         android:layout_height="120dp"
         android:background="#31C3D6"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true">
 
         <Button
             android:layout_width="300dp"

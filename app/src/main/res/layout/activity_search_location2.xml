@@ -5,6 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
+    </android.support.design.widget.AppBarLayout>
+
+
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent" android:id="@+id/map"
@@ -14,14 +19,38 @@
         <android.support.v7.widget.CardView
             android:id="@+id/cardview"
             android:background="#20ffffff"
-            android:layout_width="300dip"
+            android:layout_width="340dip"
             android:layout_height="37dp"
-            android:layout_marginTop="80dp">
+            android:layout_marginTop="80dp"
+            android:layout_marginLeft="15dp">
 
-            <AutoCompleteTextView
-                android:id="@+id/searchLocation"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <AutoCompleteTextView
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/searchLocation"
+                    android:layout_weight="9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:scrollHorizontally="true"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:background="#ffffff"/>
+
+                <ImageView
+                    android:id="@+id/cancelSearchFood"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/cancel"
+                    android:onClick="cancel"/>
+            </LinearLayout>
+
         </android.support.v7.widget.CardView>
 
         <ImageView

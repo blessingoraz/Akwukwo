@@ -10,16 +10,27 @@ android {
     }
     defaultConfig {
         applicationId "hk.ust.cse.comp107x.schoolapp"
-        minSdkVersion 20
+        minSdkVersion 16
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
         multiDexEnabled true
     }
+
+    signingConfigs {
+        release {
+            storeFile file("my_release_key.keystore")
+            storePassword "android"
+            keyAlias "alias_name"
+            keyPassword "android"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
     }
     productFlavors {
@@ -28,7 +39,6 @@ android {
         javaMaxHeapSize "4g"
     }
 }
-
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')

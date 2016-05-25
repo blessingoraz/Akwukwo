@@ -21,4 +21,9 @@ public class Constants {
     public static final String SCHOOL_DETAILED_ADDRESS = "detailedAddress";
     public static final String SCHOOL_LATITUDE = "latitude";
     public static final String SCHOOL_LONGITUDE = "longitude";
+    public static final String SCHOOL_ID = "schoolId";
+    public static final String SCHOOL_ALL_ID = "allId";
+
+    public static final String USER_NAME = "userName";
+    public static final String USER_EMAIL = "userEmail";
 }

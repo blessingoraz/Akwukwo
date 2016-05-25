@@ -1,16 +1,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".ViewPageActivity">
 
     <item
         android:id="@+id/all_schools"
         android:title="List Of Schools"
-        android:orderInCategory="100" app:showAsAction="never" />
+        android:orderInCategory="100"  />
 
     <item
         android:id = "@+id/my_schools"
-        android:title = "My List Of Schools"
-        android:orderInCategory = "100" />
+        android:title = "My Schools"
+        android:orderInCategory = "100"/>
+
+    <item
+        android:id = "@+id/register_school"
+        android:title = "Register School"
+        android:orderInCategory="100"/>
 
     <item
         android:id = "@+id/my_account"
@@ -21,6 +26,5 @@
         android:id = "@+id/logout"
         android:title = "Logout"
         android:orderInCategory="100"/>
-
 
 </menu>

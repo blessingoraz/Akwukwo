@@ -26,7 +26,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="School Name"
-                android:textSize="25sp"
+                android:textSize="18sp"
                 android:layout_marginTop="30dp"
                 android:paddingLeft="25dp"
                 android:textColor="#212121"/>
@@ -53,14 +53,24 @@
             android:textSize="15sp"/>
 
         <TextView
-            android:id="@+id/whats_next"
+            android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="More details"
+            android:text="Delete"
             android:textColor="#5C6BC0"
             android:textStyle="bold"
             android:layout_marginTop="170dp"
-            android:paddingLeft="250dp" />
+            android:layout_marginLeft="280dp"/>
+
+        <TextView
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:textColor="#5C6BC0"
+            android:textStyle="bold"
+            android:layout_marginTop="170dp"
+            android:layout_marginLeft="220dp"/>
 
 
     </android.support.v7.widget.CardView>

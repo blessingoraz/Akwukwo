@@ -6,8 +6,61 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="#ffffff"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_users_account"
     tools:context="hk.ust.cse.comp107x.schoolapp.UsersAccountActivity">
 
+    <ImageView
+        android:id="@+id/email_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_mail_outline_black_24dp"
+        android:layout_alignTop="@+id/email_edit"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="300dip"
+        android:layout_height="wrap_content"
+        android:id="@+id/email_edit"
+        android:ems="10"
+        android:layout_marginTop="180dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:inputType="textEmailAddress"
+        android:ellipsize="end"
+        android:paddingLeft="20dp"/>
+
+    <ImageView
+        android:id="@+id/name_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_person_outline_black_24dp"
+        android:layout_alignTop="@+id/first_name"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/first_name"
+        android:ems="10"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="300dip"
+        android:layout_height="wrap_content"
+        android:text="UPDATE"
+        android:textColor="#BBBCBD"
+        android:textSize="18sp"
+        android:id="@+id/edit_user_details"
+        android:layout_below="@+id/first_name"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:background="#ffffff"
+        android:stateListAnimator="@null"/>
 </RelativeLayout>

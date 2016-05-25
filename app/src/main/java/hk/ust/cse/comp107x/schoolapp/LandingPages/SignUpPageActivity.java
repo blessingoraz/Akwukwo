@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,15 @@ public class SignUpPageActivity extends AppCompatActivity {
     final Firebase userRef = ref.child("users");
 
     private ProgressDialog mProgress;
+
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        Intent intent = new Intent(SignUpPageActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +54,24 @@ public class SignUpPageActivity extends AppCompatActivity {
         mUserEmail = (TextView) findViewById(R.id.user_email);
         mUserName = (TextView) findViewById(R.id.user_name);
         mUserPassword = (TextView) findViewById(R.id.user_password);
+
+        mUserPassword.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode){
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            Utils.hideSoftKeyboard(SignUpPageActivity.this);
+                            return true;
+                        default:
+                            break;
+                    }
+
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -59,14 +87,14 @@ public class SignUpPageActivity extends AppCompatActivity {
             final String name = mUserName.getText().toString().trim();
             final String password = mUserPassword.getText().toString().trim();
 
-            if(email.equals("")) {
+            if(Utils.isEmpty(email)) {
                 mUserEmail.setError("This field is required");
             }
 
-            else if(name.equals("")) {
+            else if(Utils.isEmpty(name)) {
                 mUserName.setError("This field is required");
             }
-            else if(password.equals("")) {
+            else if(Utils.isEmpty(password)) {
                 mUserPassword.setError("This field is required");
             }
 
@@ -75,7 +103,9 @@ public class SignUpPageActivity extends AppCompatActivity {
                 mUserPassword.setHint("input password");
             }
 
-            else if(!(email.equals("")) && !(name.equals("")) && !(password.equals(""))) {
+            // Remove this
+            
+            else if(Utils.isNotEmpty(email) && Utils.isNotEmpty(name) && Utils.isNotEmpty(password)) {
 
                 mProgress = ProgressDialog.show(SignUpPageActivity.this, "", getString(R.string.loading), true, false);
                 ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
@@ -94,6 +124,8 @@ public class SignUpPageActivity extends AppCompatActivity {
                         String uid = (String) result.get("uid");
 
                         editor.putString(Constants.USER_TOKEN, uid);
+                        editor.putString(Constants.USER_NAME, name);
+                        editor.putString(Constants.USER_EMAIL, email);
 
                         editor.apply();
 

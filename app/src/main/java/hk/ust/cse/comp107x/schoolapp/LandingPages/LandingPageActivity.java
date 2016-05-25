@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import hk.ust.cse.comp107x.schoolapp.Fragments.FirstFragment;
 import hk.ust.cse.comp107x.schoolapp.Fragments.SecondFragment;
+import hk.ust.cse.comp107x.schoolapp.Fragments.ThirdFragment;
 import hk.ust.cse.comp107x.schoolapp.R;
 
 public class LandingPageActivity extends AppCompatActivity {
@@ -63,6 +64,9 @@ public class LandingPageActivity extends AppCompatActivity {
                     case 1:
                         switchToPostion(1);
                         break;
+                    case 2:
+                        switchToPostion(2);
+                        break;
                 }
 
             }
@@ -87,7 +91,9 @@ public class LandingPageActivity extends AppCompatActivity {
                 case 0:
                     return FirstFragment.newInstance(0, "Hello");
                 case 1:
-                    return SecondFragment.newInstance(1, "Hi");
+                    return SecondFragment.newInstance(1, "Hmmm");
+                case 2:
+                    return ThirdFragment.newInstance(2, "Holla");
                 default:
                     return null;
             }
@@ -95,13 +101,13 @@ public class LandingPageActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
     }
 
     int switchToPostion(int position){
         // declare images for the current postion...
-        int[] animatedImage = new int[]{R.drawable.indicator1, R.drawable.indicator2};
+        int[] animatedImage = new int[]{R.drawable.indicator1, R.drawable.indicator2, R.drawable.indicator3};
 
         //...and set the image appropriate for the current page
         animatedImageImage.setImageResource (animatedImage[position]);

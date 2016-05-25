@@ -10,6 +10,8 @@ public class UserDetails {
     public String id;
     public String name;
     public String password;
+    public String index;
+
     public Boolean contain(String value) {
         if (value.equals(email) || value.equals(accessToken) || value.equals(id) || value.equals(name) || value.equals(password)) {
             return true;
@@ -29,6 +31,8 @@ public class UserDetails {
     public String detailedAddress;
     public String latitude;
     public String longitude;
+    public String schoolId;
+    public String allSchoolId;
 
     public UserDetails() {
 

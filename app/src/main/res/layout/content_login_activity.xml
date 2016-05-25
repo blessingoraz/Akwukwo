@@ -27,7 +27,10 @@
         android:hint="Email "
         android:layout_centerInParent="true"
         android:inputType="textEmailAddress"
-        android:textSize="15sp"/>
+        android:textSize="15sp"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/user_password_login"
@@ -38,7 +41,10 @@
         android:textSize="15sp"
         android:layout_marginTop="30dp"
         android:layout_below="@+id/user_email_login"
-        android:layout_alignStart="@+id/user_email_login" />
+        android:layout_alignStart="@+id/user_email_login"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:singleLine="true"/>
 
     <Button
         android:id="@+id/login_user"

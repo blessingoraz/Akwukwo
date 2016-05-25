@@ -7,7 +7,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">#638A9D</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">#BBBCBD</item>
     </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
