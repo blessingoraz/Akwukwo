@@ -155,7 +155,7 @@ public class ListOfMySchhols extends AppCompatActivity {
                         Utils.showLongMessage(schools.getKey(), ListOfMySchhols.this);
 
                          UserDetails details = schools.getValue(UserDetails.class);
-                        details.schoolId = schools.getKey();
+                        details.setSchoolId( schools.getKey());
 
                         mListOfSchools.add(details);
 

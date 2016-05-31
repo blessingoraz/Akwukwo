@@ -256,18 +256,18 @@ public class ViewPageActivity extends BaseActivity {
                 SharedPreferences pref = getSharedPreferences("SchoolDetails", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
 
-                editor.putString(Constants.SCHOOL_NAME, userDetails.schoolName);
-                editor.putString(Constants.SCHOOL_ADDRESS, userDetails.address);
-                editor.putString(Constants.SCHOOL_MOTTO, userDetails.motto);
-                editor.putString(Constants.SCHOOL_IMAGE, userDetails.schoolImage);
-                editor.putString(Constants.SCHOOL_VISION, userDetails.vision);
-                editor.putString(Constants.SCHOOL_FFES, userDetails.fees);
-                editor.putString(Constants.SCHOOL_LEVEL, userDetails.level);
-                editor.putString(Constants.SCHOOL_PHONE, userDetails.phone);
-                editor.putString(Constants.SCHOOL_EMAIL, userDetails.schoolEmail);
-                editor.putString(Constants.SCHOOL_DETAILED_ADDRESS, userDetails.detailedAddress);
-                editor.putString(Constants.SCHOOL_LATITUDE, userDetails.latitude);
-                editor.putString(Constants.SCHOOL_LONGITUDE, userDetails.longitude);
+                editor.putString(Constants.SCHOOL_NAME, userDetails.getSchoolName());
+                editor.putString(Constants.SCHOOL_ADDRESS, userDetails.getAddress());
+                editor.putString(Constants.SCHOOL_MOTTO, userDetails.getMotto());
+                editor.putString(Constants.SCHOOL_IMAGE, userDetails.getSchoolImage());
+                editor.putString(Constants.SCHOOL_VISION, userDetails.getVision());
+                editor.putString(Constants.SCHOOL_FFES, userDetails.getFees());
+                editor.putString(Constants.SCHOOL_LEVEL, userDetails.getLevel());
+                editor.putString(Constants.SCHOOL_PHONE, userDetails.getPhone());
+                editor.putString(Constants.SCHOOL_EMAIL, userDetails.getEmail());
+                editor.putString(Constants.SCHOOL_DETAILED_ADDRESS, userDetails.getDetailedAddress());
+                editor.putString(Constants.SCHOOL_LATITUDE, userDetails.getLatitude());
+                editor.putString(Constants.SCHOOL_LONGITUDE, userDetails.getLongitude());
 //                editor.putString(Constants.SCHOOL_ALL_ID, userDetails.schoolId);
 
                 editor.commit();
@@ -324,9 +324,9 @@ public class ViewPageActivity extends BaseActivity {
                 TextView edit = (TextView)row.findViewById(R.id.edit);
                 TextView delete = (TextView)row.findViewById(R.id.delete);
 
-                schoolName.setText(userDetails.schoolName);
-                schoolVision.setText(userDetails.vision);
-                schoolImage.setImageBitmap(decodeBase64(userDetails.schoolImage));
+                schoolName.setText(userDetails.getSchoolName());
+                schoolVision.setText(userDetails.getVision());
+                schoolImage.setImageBitmap(decodeBase64(userDetails.getSchoolImage()));
                 delete.setText("");
                 edit.setText("More details");
 
