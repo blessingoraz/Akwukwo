@@ -12,7 +12,7 @@ This application is meant for school owners, proprietors, principals e.t.c, to r
 
 ## Setting up your working environments
 
-*You need to have [Android Studio](https://developer.android.com/studio/install.html) installed on your sytem. The link has instructions for linux, mac and windows.
++ You need to have [Android Studio](https://developer.android.com/studio/install.html) installed on your sytem. The link has instructions for linux, mac and windows.
 
 
 ## Contributing and developing a feature
