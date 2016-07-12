@@ -13,6 +13,7 @@ This application is meant for school owners, proprietors, principals e.t.c, to r
 ## Setting up your working environments
 
 + You need to have [Android Studio](https://developer.android.com/studio/install.html) installed on your sytem. The link has instructions for linux, mac and windows.
++ Fork the project [repo](https://github.com/andela-borazulume/Akwukwo). Forking the project allows you to have acopy of the project repo so that you can make your own changes or experiment which should not affect the main repo. Read [more](https://help.github.com/articles/fork-a-repo/)
 
 
 ## Contributing and developing a feature
