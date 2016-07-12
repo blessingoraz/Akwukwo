@@ -1,6 +1,6 @@
 # AKWUKWO
 
-### A mobile app for searching schools (primary and secondary) in Nigeria. 
+###### A mobile app for searching schools (primary and secondary) in Nigeria. 
 
 ## Problem we are trying to solve
 ## Overview of the application
