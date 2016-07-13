@@ -30,7 +30,7 @@ This application is meant for school owners, proprietors, principals e.t.c, to r
 + Make comments on your PR explaining what you did. If resolved an issue, please reference the issue. 
 + The PR will be merge once your code has been reviewed.😊
 
-## Managing merge Conflict
+## Resolving merge Conflict
 
 Here is an issue you will likely encounter when collaborating in an open source project. 
 ## Libraries used
