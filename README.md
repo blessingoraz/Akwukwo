@@ -32,10 +32,16 @@ This application is meant for school owners, proprietors, principals e.t.c, to r
 
 ## Resolving merge Conflict
 
-Here is an issue you will likely encounter when collaborating in an open source project. 
+Here is an issue you will likely encounter when collaborating in an open source project. This is the reason why one has to have a good git workflow
+
 ## Libraries used
-## Git workflow
-## Current app image
+
++ [circularprogressbar](https://github.com/lopspower/CircularProgressBar)
++ 
+
+## App images
+
+
 ## Link to play store
 ## Open source license link
 ##Contact email
