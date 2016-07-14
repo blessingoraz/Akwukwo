@@ -11,12 +11,12 @@
     <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
         android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#82a1b0"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <include layout="@layout/toolbar"/>
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
 
     </android.support.design.widget.AppBarLayout>
 
@@ -48,31 +48,6 @@
             android:textSize="15sp"/>
 
         <RelativeLayout
-            android:id="@+id/layout_for_school_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/map">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/school"
-                android:layout_marginTop="35dp"/>
-
-            <EditText
-                android:layout_width="300dip"
-                android:layout_height="wrap_content"
-                android:id="@+id/school_name"
-                android:hint="School's name"
-                android:textSize="15sp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="25dp"
-                android:lines="1"
-                android:scrollHorizontally="true"
-                android:singleLine="true"/>
-        </RelativeLayout>
-
-        <RelativeLayout
             android:id="@+id/layout_for_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,7 +67,34 @@
                 android:textSize="15sp"
                 android:layout_marginTop="25dp"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:background="#E9E9E9"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_for_school_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/map">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/school"
+                android:layout_marginTop="35dp"/>
+
+            <EditText
+                android:layout_width="300dip"
+                android:layout_height="wrap_content"
+                android:id="@+id/school_name"
+                android:hint="School's name"
+                android:textSize="15sp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="25dp"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -115,6 +117,7 @@
                 android:textSize="15sp"
                 android:layout_marginTop="20dp"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:lines="1"
                 android:scrollHorizontally="true"
                 android:singleLine="true"/>
@@ -126,6 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/relativeLayout"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="20dp"
             android:text="Next"
             android:onClick="completeRegistration"

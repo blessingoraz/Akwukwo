@@ -25,6 +25,16 @@ public class UserDetails {
     private String schoolId;
     private String allSchoolId;
 
+    public String getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
+    }
+
+    private String currentDate;
+
     public String getEmail() {
         return email;
     }

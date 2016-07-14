@@ -7,9 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
@@ -25,26 +22,20 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import hk.ust.cse.comp107x.schoolapp.LandingPages.BaseActivity;
 import hk.ust.cse.comp107x.schoolapp.LandingPages.LandingPageActivity;
-import hk.ust.cse.comp107x.schoolapp.LandingPages.MainActivity;
-import hk.ust.cse.comp107x.schoolapp.LandingPages.SignUpPageActivity;
-import hk.ust.cse.comp107x.schoolapp.Singletons.SchoolDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 import hk.ust.cse.comp107x.schoolapp.tool.UserDetailsManager;
@@ -142,17 +133,16 @@ public class ViewPageActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        mGoogleApiClient = ((MainActivity)getApplicationContext()).buildApiClient();
 
         listView = (ListView) findViewById(R.id.get_all_registered_schools);
 
-        mGetMoreSchools = (Button) findViewById(R.id.more);
-        mGetMoreSchools.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setupListview();
-            }
-        });
+//        mGetMoreSchools = (Button) findViewById(R.id.more);
+//        mGetMoreSchools.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setupListview();
+//            }
+//        });
 
         SharedPreferences preferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         Firebase.setAndroidContext(this);
@@ -196,7 +186,6 @@ public class ViewPageActivity extends BaseActivity {
 
                     if (mProgress != null)
                         mProgress.dismiss();
-
                 }
             });
 
@@ -217,30 +206,6 @@ public class ViewPageActivity extends BaseActivity {
 
         Collections.reverse(mListOfSchools);
 
-//        int size = 0;
-//
-//        UserDetailsManager manager = new UserDetailsManager(size+=3);
-//
-//        for (int i = 0; i < size; i++) {
-//
-//            if( i < mListOfSchools.size())
-//                manager.addDetails(mListOfSchools.get(i));
-//        }
-//
-//
-//        modifiedContent = new ArrayList<>();
-//
-//        if (modifiedContent != null) {
-//
-//            for (int i = 0; i < manager.schools.length; i++) {
-//                if (!manager.schools[i].address.isEmpty())
-//                    modifiedContent.add(manager.schools[i]);
-//            }
-//
-//        } else {
-//
-//            Utils.showLongMessage("No schools registered yet", ViewPageActivity.this);
-//        }
 
         // we had modifiedContent in place of mListOfSchools
 
@@ -273,11 +238,9 @@ public class ViewPageActivity extends BaseActivity {
                 editor.commit();
 
                 startActivity(new Intent(ViewPageActivity.this, DetailOfEachSchool.class));
-
             }
         });
     }
-
 
     public class MySchoolAdapter extends BaseAdapter {
 
@@ -321,14 +284,10 @@ public class ViewPageActivity extends BaseActivity {
                 TextView schoolName = (TextView)row.findViewById(R.id.name_from_firebase);
                 TextView schoolVision = (TextView)row.findViewById(R.id.vision);
                 ImageView schoolImage = (ImageView)row.findViewById(R.id.image_from_firebase);
-                TextView edit = (TextView)row.findViewById(R.id.edit);
-                TextView delete = (TextView)row.findViewById(R.id.delete);
 
                 schoolName.setText(userDetails.getSchoolName());
                 schoolVision.setText(userDetails.getVision());
                 schoolImage.setImageBitmap(decodeBase64(userDetails.getSchoolImage()));
-                delete.setText("");
-                edit.setText("More details");
 
             }catch (Exception e) {e.printStackTrace();}
 

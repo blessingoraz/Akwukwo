@@ -6,4 +6,5 @@ package hk.ust.cse.comp107x.schoolapp.Singletons;
 public class ColorCodes {
     public static String RED = "#ff0000";
     public static String GRAY = "#BBBCBD";
+    public static String WIFI_GRAY_COLOR = "#cccccc";
 }

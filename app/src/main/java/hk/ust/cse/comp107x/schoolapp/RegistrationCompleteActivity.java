@@ -42,7 +42,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -203,6 +206,11 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
                 int selectedLevel = mSchoolLevel.getCheckedRadioButtonId();
                 mSelectedLevel = (RadioButton) findViewById(selectedLevel);
 
+                //get date.now
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Calendar cal = Calendar.getInstance();
+
+
                 UserDetails details = new UserDetails();
                 details.setSchoolName(preferences.getString(Constants.SCHOOL_NAME, ""));
                 details.setAddress(preferences.getString(Constants.SCHOOL_ADDRESS, ""));
@@ -216,6 +224,7 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
                 details.setSchoolImage(preferences.getString(Constants.SCHOOL_IMAGE, "")); //TODO Check this out ASAP
                 details.setLatitude(preferences1.getString(Constants.SCHOOL_LATITUDE, ""));
                 details.setLongitude(preferences1.getString(Constants.SCHOOL_LONGITUDE, ""));
+                details.setCurrentDate(dateFormat.format(cal.getTime()));
 
                 String id = preferences.getString(Constants.USER_TOKEN, "");
 
@@ -231,7 +240,6 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
                 } else {
                     String schoolId = pref.getString(Constants.SCHOOL_ID, "");
                     ref.child("users").child(id).child("schools").child(schoolId).setValue(details);
-//
                     ref.child("schools").child(schoolId).setValue(details);
                 }
 
