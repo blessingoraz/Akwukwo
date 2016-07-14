@@ -44,5 +44,13 @@ Here is an issue you will likely encounter when collaborating in an open source 
 ![alt tag](https://raw.githubusercontent.com/andela-borazulume/Akwukwo/master/githubImg.png)
 
 ## Link to play store
+
+The first version of the app has been published on play store. Although it has some glitches. Check it out [here](https://play.google.com/store/apps/details?id=hk.ust.cse.comp107x.schoolapp).
+
 ## Open source license link
+
+[GNU General Public License, version 3 (GPL-3.0)](https://opensource.org/licenses/GPL-3.0)
+
 ##Contact email
+
+If you have any questions, comments and suggestions, please feel free to contact me at email address [orazulumeblessing@gmail.com](mailto:orazulumeblessing@gmail.com)
