@@ -41,7 +41,7 @@ Here is an issue you will likely encounter when collaborating in an open source 
 
 ## App images 
 
-![alt tag](https://github.com/andela-borazulume/Akwukwo/blob/master/githubImg.png)
+![alt tag](https://raw.githubusercontent.com/andela-borazulume/Akwukwo/master/githubImg.png)
 
 ## Link to play store
 ## Open source license link
