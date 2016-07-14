@@ -39,9 +39,9 @@ Here is an issue you will likely encounter when collaborating in an open source 
 + [circularprogressbar](https://github.com/lopspower/CircularProgressBar)
 + 
 
-## App images
+## App images 
 
-![alt tag](https://raw.githubusercontent.com/andela-borazulume/Akwukwo/master/Screenshot_2016-07-13-17-27-04.png)
+![alt tag](https://github.com/andela-borazulume/Akwukwo/blob/master/githubImg.png)
 
 ## Link to play store
 ## Open source license link
