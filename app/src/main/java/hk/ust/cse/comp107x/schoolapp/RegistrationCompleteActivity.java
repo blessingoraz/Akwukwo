@@ -1,7 +1,6 @@
 package hk.ust.cse.comp107x.schoolapp;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,8 +16,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -31,8 +28,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 
@@ -47,8 +42,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import hk.ust.cse.comp107x.schoolapp.LandingPages.LoginActivity;
-import hk.ust.cse.comp107x.schoolapp.LandingPages.SignUpPageActivity;
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 
@@ -250,7 +243,7 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
                     ref.child("schools").child(schoolId).setValue(details);
                 }
 
-                startActivity(new Intent(RegistrationCompleteActivity.this, ListOfMySchhols.class));
+                startActivity(new Intent(RegistrationCompleteActivity.this, ListOfMySchools.class));
             }
 
 

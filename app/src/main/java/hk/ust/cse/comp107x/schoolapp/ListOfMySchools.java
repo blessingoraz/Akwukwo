@@ -6,20 +6,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,13 +26,10 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 
-import hk.ust.cse.comp107x.schoolapp.LandingPages.LoginActivity;
-import hk.ust.cse.comp107x.schoolapp.LandingPages.MainActivity;
-import hk.ust.cse.comp107x.schoolapp.LandingPages.SignUpPageActivity;
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 
-public class ListOfMySchhols extends AppCompatActivity {
+public class ListOfMySchools extends AppCompatActivity {
 
     private ProgressDialog mProgress;
     private TextView mDelete;
@@ -53,7 +44,7 @@ public class ListOfMySchhols extends AppCompatActivity {
 
     public boolean delete (int position) {
 
-        if(Utils.isOnLine(ListOfMySchhols.this)) {
+        if(Utils.isOnLine(ListOfMySchools.this)) {
             //save the item
             UserDetails details = mListOfSchools.get(position);
             //remove the item from the arraylist
@@ -65,7 +56,7 @@ public class ListOfMySchhols extends AppCompatActivity {
             return true;
         } else {
 
-            Utils.showShortToast("Check your internet", ListOfMySchhols.this);
+            Utils.showShortToast("Check your internet", ListOfMySchools.this);
             return false;
         }
 
@@ -77,21 +68,21 @@ public class ListOfMySchhols extends AppCompatActivity {
 
         switch (id) {
             case R.id.all_schools:
-                startActivity(new Intent(ListOfMySchhols.this, ViewPageActivity.class));
+                startActivity(new Intent(ListOfMySchools.this, ViewPageActivity.class));
                 return true;
 
             case R.id.my_schools:
                 return true;
 
             case R.id.register_school:
-                startActivity(new Intent(ListOfMySchhols.this, RegistrationActivity.class));
+                startActivity(new Intent(ListOfMySchools.this, RegistrationActivity.class));
                 return true;
             case R.id.my_account:
-                startActivity(new Intent(ListOfMySchhols.this, UsersAccountActivity.class));
+                startActivity(new Intent(ListOfMySchools.this, UsersAccountActivity.class));
                 return true;
 
             case R.id.logout:
-                Utils.showLongMessage("I am logout", ListOfMySchhols.this);
+                Utils.showLongMessage("I am logout", ListOfMySchools.this);
 
                 return true;
 
@@ -111,7 +102,7 @@ public class ListOfMySchhols extends AppCompatActivity {
     public void onBackPressed() {
 
         finish();
-        Intent intent = new Intent(ListOfMySchhols.this, ViewPageActivity.class);
+        Intent intent = new Intent(ListOfMySchools.this, ViewPageActivity.class);
         startActivity(intent);
     }
 
@@ -126,7 +117,7 @@ public class ListOfMySchhols extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ListOfMySchhols.this, ViewPageActivity.class));
+                startActivity(new Intent(ListOfMySchools.this, ViewPageActivity.class));
             }
         });
 
@@ -140,9 +131,9 @@ public class ListOfMySchhols extends AppCompatActivity {
 
         ref = new Firebase(Constants.FIREBASE_URL_USERS+"/"+id);
 
-        mProgress = ProgressDialog.show(ListOfMySchhols.this, "", getString(R.string.loading), true, false);
+        mProgress = ProgressDialog.show(ListOfMySchools.this, "", getString(R.string.loading), true, false);
 
-        if(Utils.isOnLine(ListOfMySchhols.this)) {
+        if(Utils.isOnLine(ListOfMySchools.this)) {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -152,7 +143,7 @@ public class ListOfMySchhols extends AppCompatActivity {
 
                     for(DataSnapshot schools: dataSnapshot.child("schools").getChildren()) {
 
-                        Utils.showLongMessage(schools.getKey(), ListOfMySchhols.this);
+                        Utils.showLongMessage(schools.getKey(), ListOfMySchools.this);
 
                          UserDetails details = schools.getValue(UserDetails.class);
                         details.schoolId = schools.getKey();
@@ -180,7 +171,7 @@ public class ListOfMySchhols extends AppCompatActivity {
             });
         } else {
 
-            Utils.showLongMessage(Constants.CHECK_CONNECTION, ListOfMySchhols.this);
+            Utils.showLongMessage(Constants.CHECK_CONNECTION, ListOfMySchools.this);
         }
 
     }
@@ -278,7 +269,7 @@ public class ListOfMySchhols extends AppCompatActivity {
                     editor.putString(Constants.SCHOOL_ALL_ID, userDetails.allSchoolId);
 
                     editor.commit();
-                    startActivity(new Intent(ListOfMySchhols.this, RegistrationActivity.class));
+                    startActivity(new Intent(ListOfMySchools.this, RegistrationActivity.class));
                 }
             });
 
@@ -288,7 +279,7 @@ public class ListOfMySchhols extends AppCompatActivity {
 
                     final SharedPreferences pref = getSharedPreferences("SchoolDetails", Context.MODE_PRIVATE);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ListOfMySchhols.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ListOfMySchools.this);
                     builder.setTitle("Are you sure you want to delete this entry?");
 
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {

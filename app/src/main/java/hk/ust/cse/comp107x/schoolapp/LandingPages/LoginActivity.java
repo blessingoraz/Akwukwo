@@ -5,25 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 
 import hk.ust.cse.comp107x.schoolapp.Constants;
 import hk.ust.cse.comp107x.schoolapp.R;
 import hk.ust.cse.comp107x.schoolapp.ResetPasswordActivity;
-import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 import hk.ust.cse.comp107x.schoolapp.ViewPageActivity;
 
@@ -35,6 +29,12 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences pref;
 
     private Boolean exit = false;
+
+    public LoginActivity(EditText mUserLoginEmail, EditText mUserLoginPassword) {
+        this.mUserLoginEmail = mUserLoginEmail;
+        this.mUserLoginPassword = mUserLoginPassword;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

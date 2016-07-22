@@ -9,22 +9,12 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import hk.ust.cse.comp107x.schoolapp.LandingPages.LoginActivity;
-import hk.ust.cse.comp107x.schoolapp.LandingPages.SignUpPageActivity;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 
 public class RegistrationActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -94,7 +84,7 @@ public class RegistrationActivity extends FragmentActivity implements OnMapReady
                 return true;
 
             case R.id.my_schools:
-                startActivity(new Intent(RegistrationActivity.this, ListOfMySchhols.class));
+                startActivity(new Intent(RegistrationActivity.this, ListOfMySchools.class));
                 return true;
 
             case R.id.register_school:

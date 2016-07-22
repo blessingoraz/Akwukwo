@@ -56,19 +56,7 @@ public class LandingPageActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-
-                switch(position) {
-                    case 0:
-                        switchToPostion(0);
-                        break;
-                    case 1:
-                        switchToPostion(1);
-                        break;
-                    case 2:
-                        switchToPostion(2);
-                        break;
-                }
-
+                switchToPostion(position);
             }
 
             @Override

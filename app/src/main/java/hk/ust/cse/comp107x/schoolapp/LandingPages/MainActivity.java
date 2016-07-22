@@ -9,11 +9,9 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -21,7 +19,6 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
@@ -223,7 +220,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.Connec
 
                         if (mProgress != null)
                             mProgress.dismiss();
-                        Toast.makeText(MainActivity.this, "Login Cancel", Toast.LENGTH_LONG).show();
+                        Utils.showLongMessage("Login Canceled",MainActivity.this);
                     }
 
                     @Override
@@ -288,7 +285,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.Connec
                         }
 
                         else {
-                            Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_LONG).show();
+                            Utils.showLongMessage("Login Failed",getApplicationContext());
                         }
 //                    userDetails.put("profile", picture.get))
                         //We are already logged in and we can go to Landing Page

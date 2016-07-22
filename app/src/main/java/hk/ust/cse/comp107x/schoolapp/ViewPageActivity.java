@@ -7,9 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
@@ -25,29 +22,22 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import hk.ust.cse.comp107x.schoolapp.LandingPages.BaseActivity;
 import hk.ust.cse.comp107x.schoolapp.LandingPages.LandingPageActivity;
-import hk.ust.cse.comp107x.schoolapp.LandingPages.MainActivity;
-import hk.ust.cse.comp107x.schoolapp.LandingPages.SignUpPageActivity;
-import hk.ust.cse.comp107x.schoolapp.Singletons.SchoolDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
-import hk.ust.cse.comp107x.schoolapp.tool.UserDetailsManager;
 
 public class ViewPageActivity extends BaseActivity {
 
@@ -83,7 +73,7 @@ public class ViewPageActivity extends BaseActivity {
                 return true;
 
             case R.id.my_schools:
-                startActivity(new Intent(ViewPageActivity.this, ListOfMySchhols.class));
+                startActivity(new Intent(ViewPageActivity.this, ListOfMySchools.class));
                 return true;
 
             case R.id.register_school:
