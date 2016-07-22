@@ -267,7 +267,7 @@
         android:layout_alignParentEnd="true"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:onClick="registerSchool"/>
+        android:onClick="registerSchoolBtn"/>
 
 
 

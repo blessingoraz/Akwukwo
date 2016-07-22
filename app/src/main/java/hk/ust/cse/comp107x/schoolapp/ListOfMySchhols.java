@@ -155,7 +155,7 @@ public class ListOfMySchhols extends AppCompatActivity {
                         Utils.showLongMessage(schools.getKey(), ListOfMySchhols.this);
 
                          UserDetails details = schools.getValue(UserDetails.class);
-                        details.schoolId = schools.getKey();
+                        details.setSchoolId( schools.getKey());
 
                         mListOfSchools.add(details);
 
@@ -251,77 +251,77 @@ public class ListOfMySchhols extends AppCompatActivity {
             TextView schoolVision = (TextView)row.findViewById(R.id.vision);
             ImageView schoolImage = (ImageView)row.findViewById(R.id.image_from_firebase);
 
-            final TextView delete = (TextView)row.findViewById(R.id.delete);
-            TextView edit = (TextView)row.findViewById(R.id.edit);
+//            final TextView delete = (TextView)row.findViewById(R.id.delete);
+//            TextView edit = (TextView)row.findViewById(R.id.edit);
 
-            edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+//            edit.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                    // add a progress dialog
+//                    SharedPreferences pref = getSharedPreferences("EachSchool", Context.MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = pref.edit();
+//
+//                    editor.putString(Constants.SCHOOL_NAME, userDetails.getSchoolName());
+//                    editor.putString(Constants.SCHOOL_ADDRESS, userDetails.getAddress());
+//                    editor.putString(Constants.SCHOOL_MOTTO, userDetails.getMotto());
+//                    editor.putString(Constants.SCHOOL_IMAGE, userDetails.getSchoolImage());
+//                    editor.putString(Constants.SCHOOL_VISION, userDetails.getVision());
+//                    editor.putString(Constants.SCHOOL_FFES, userDetails.getFees());
+//                    editor.putString(Constants.SCHOOL_LEVEL, userDetails.getLevel());
+//                    editor.putString(Constants.SCHOOL_PHONE, userDetails.getPhone());
+//                    editor.putString(Constants.SCHOOL_EMAIL, userDetails.getSchoolEmail());
+//                    editor.putString(Constants.SCHOOL_DETAILED_ADDRESS, userDetails.getDetailedAddress());
+//                    editor.putString(Constants.SCHOOL_LATITUDE, userDetails.getLatitude());
+//                    editor.putString(Constants.SCHOOL_LONGITUDE, userDetails.getLongitude());
+//                    editor.putString(Constants.SCHOOL_ID, userDetails.getId());
+//                    editor.putString(Constants.SCHOOL_ALL_ID, userDetails.getAllSchoolId());
+//
+//                    editor.commit();
+//                    startActivity(new Intent(ListOfMySchhols.this, RegistrationActivity.class));
+//                }
+//            });
 
-                    // add a progress dialog
-                    SharedPreferences pref = getSharedPreferences("EachSchool", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = pref.edit();
+//            delete.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                    final SharedPreferences pref = getSharedPreferences("SchoolDetails", Context.MODE_PRIVATE);
+//
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(ListOfMySchhols.this);
+//                    builder.setTitle("Are you sure you want to delete this entry?");
+//
+//                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                            delete(position);
+//
+//                            ref = new Firebase(Constants.FIREBASE_URL_USERS+"/"+id+"/schools/"+userDetails.getId());
+//                            ref.removeValue();
+//
+//                            String id = pref.getString(Constants.SCHOOL_ALL_ID, "");
+//                            Firebase schoolRef = new Firebase(Constants.FIREBASE_URL+"/schools");
+//                            schoolRef.child(id).removeValue();
+//
+//                        }
+//                    });
+//
+//                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            return;
+//                        }
+//                    });
+//
+//                    builder.create();
+//                    builder.show();
+//                }
+//            });
 
-                    editor.putString(Constants.SCHOOL_NAME, userDetails.schoolName);
-                    editor.putString(Constants.SCHOOL_ADDRESS, userDetails.address);
-                    editor.putString(Constants.SCHOOL_MOTTO, userDetails.motto);
-                    editor.putString(Constants.SCHOOL_IMAGE, userDetails.schoolImage);
-                    editor.putString(Constants.SCHOOL_VISION, userDetails.vision);
-                    editor.putString(Constants.SCHOOL_FFES, userDetails.fees);
-                    editor.putString(Constants.SCHOOL_LEVEL, userDetails.level);
-                    editor.putString(Constants.SCHOOL_PHONE, userDetails.phone);
-                    editor.putString(Constants.SCHOOL_EMAIL, userDetails.schoolEmail);
-                    editor.putString(Constants.SCHOOL_DETAILED_ADDRESS, userDetails.detailedAddress);
-                    editor.putString(Constants.SCHOOL_LATITUDE, userDetails.latitude);
-                    editor.putString(Constants.SCHOOL_LONGITUDE, userDetails.longitude);
-                    editor.putString(Constants.SCHOOL_ID, userDetails.schoolId);
-                    editor.putString(Constants.SCHOOL_ALL_ID, userDetails.allSchoolId);
-
-                    editor.commit();
-                    startActivity(new Intent(ListOfMySchhols.this, RegistrationActivity.class));
-                }
-            });
-
-            delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    final SharedPreferences pref = getSharedPreferences("SchoolDetails", Context.MODE_PRIVATE);
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ListOfMySchhols.this);
-                    builder.setTitle("Are you sure you want to delete this entry?");
-
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            delete(position);
-
-                            ref = new Firebase(Constants.FIREBASE_URL_USERS+"/"+id+"/schools/"+userDetails.schoolId);
-                            ref.removeValue();
-
-                            String id = pref.getString(Constants.SCHOOL_ALL_ID, "");
-                            Firebase schoolRef = new Firebase(Constants.FIREBASE_URL+"/schools");
-                            schoolRef.child(id).removeValue();
-
-                        }
-                    });
-
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            return;
-                        }
-                    });
-
-                    builder.create();
-                    builder.show();
-                }
-            });
-
-            schoolName.setText(userDetails.schoolName);
-            schoolVision.setText(userDetails.vision);
-            schoolImage.setImageBitmap(Utils.decodeBase64(userDetails.schoolImage));
+            schoolName.setText(userDetails.getSchoolName());
+            schoolVision.setText(userDetails.getVision());
+            schoolImage.setImageBitmap(Utils.decodeBase64(userDetails.getSchoolImage()));
             return row;
         }
     }

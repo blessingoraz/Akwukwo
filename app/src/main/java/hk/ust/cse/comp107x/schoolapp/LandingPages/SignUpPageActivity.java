@@ -72,7 +72,6 @@ public class SignUpPageActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
 
     public void signUp(View view) {
@@ -107,7 +106,8 @@ public class SignUpPageActivity extends AppCompatActivity {
             
             else if(Utils.isNotEmpty(email) && Utils.isNotEmpty(name) && Utils.isNotEmpty(password)) {
 
-                mProgress = ProgressDialog.show(SignUpPageActivity.this, "", getString(R.string.loading), true, false);
+                mProgress = ProgressDialog.show(
+                        SignUpPageActivity.this, "", getString(R.string.loading), true, false);
                 ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
                     @Override
                     public void onSuccess(Map<String, Object> result) {
@@ -116,10 +116,10 @@ public class SignUpPageActivity extends AppCompatActivity {
                             mProgress.dismiss();
 
                         UserDetails userDetails = new UserDetails();
-                        userDetails.name = name;
-                        userDetails.email = email;
-                        userDetails.password = password;
-                        userDetails.accessToken = (String) result.get("uid");
+                        userDetails.setName(name);
+                        userDetails.setEmail(email);
+                        userDetails.setPassword(password);
+                        userDetails.setAccessToken((String) result.get("uid"));
 
                         String uid = (String) result.get("uid");
 
@@ -147,7 +147,6 @@ public class SignUpPageActivity extends AppCompatActivity {
         } else {
             Utils.showLongMessage(Constants.CHECK_CONNECTION, SignUpPageActivity.this);
         }
-
     }
 
     public void compareEmail(final UserDetails userDetails, final String emailFromUserDetail, final String userdetailUid) {
@@ -210,6 +209,5 @@ public class SignUpPageActivity extends AppCompatActivity {
     public void loginPage(View view) {
         startActivity(new Intent(SignUpPageActivity.this, LoginActivity.class));
     }
-
 
 }

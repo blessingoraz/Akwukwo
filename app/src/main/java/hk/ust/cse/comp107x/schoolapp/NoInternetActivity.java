@@ -11,14 +11,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import hk.ust.cse.comp107x.schoolapp.LandingPages.LandingPageActivity;
 import hk.ust.cse.comp107x.schoolapp.LandingPages.SplashScreen;
+import hk.ust.cse.comp107x.schoolapp.Singletons.ColorCodes;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
+import hk.ust.cse.comp107x.schoolapp.tool.ImageFilter;
 
 public class NoInternetActivity extends AppCompatActivity {
+    private ImageView mWifiIcon;
 
     Button mTryAgain;
     @Override
@@ -27,6 +31,9 @@ public class NoInternetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_no_internet);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mWifiIcon = (ImageView) findViewById(R.id.wifiImage);
+        ImageFilter.filterImage(mWifiIcon, ColorCodes.WIFI_GRAY_COLOR);
 
     }
 

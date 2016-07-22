@@ -265,12 +265,12 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.Connec
                     public void onAuthenticated(AuthData authData) {
 
                         final UserDetails details = new UserDetails();
-                        details.name = authData.getProviderData().get("displayName").toString();
-                        details.id = authData.getUid();
+                        details.setName(authData.getProviderData().get("displayName").toString());
+                        details.setId(authData.getUid());
 
                         String emailAvailable = authData.getProviderData().get("email").toString();
                         details.email = (emailAvailable == null) ? "email@email.com" : emailAvailable;;
-                        details.accessToken = authData.getToken();
+                        details.setAccessToken(authData.getToken());
 
                         userRef.child(authData.getUid()).setValue(details);
 
@@ -414,9 +414,9 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.Connec
                     Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
                     final UserDetails details = new UserDetails();
-                    details.name = currentPerson.getDisplayName();
+                    details.setName(currentPerson.getDisplayName());
                     details.email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-                    details.accessToken = token;
+                    details.setAccessToken(token);
 
                     userRef.child(currentPerson.getId()).setValue(details);
 

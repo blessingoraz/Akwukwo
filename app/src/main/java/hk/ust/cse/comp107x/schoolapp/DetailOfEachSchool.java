@@ -51,23 +51,23 @@ public class DetailOfEachSchool extends FragmentActivity implements OnMapReadyCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_of_each_school);
 
-        mSchoolImage = (ImageView) findViewById(R.id.school_image_from_firebase);
-        mSchoolName = (TextView) findViewById(R.id.school_name_from_firebase);
-        mSchoolMotto = (TextView) findViewById(R.id.school_motto_from_firebase);
-        mSchoolAddress = (TextView) findViewById(R.id.school_address_from_firebase);
-        mSchoolTelephone = (TextView) findViewById(R.id.school_phone_number_from_firebase);
-        mSchoolFees = (TextView) findViewById(R.id.school_fees_range_from_firebase);
-        mSchoolEmail = (TextView) findViewById(R.id.school_email_from_firebase);
-
-        pref = getSharedPreferences("SchoolDetails", android.content.Context.MODE_PRIVATE);
-
-        mSchoolImage.setImageBitmap(decodeBase64(pref.getString(Constants.SCHOOL_IMAGE, "")));
-        mSchoolName.setText(pref.getString(Constants.SCHOOL_NAME, ""));
-        mSchoolMotto.setText(pref.getString(Constants.SCHOOL_MOTTO, ""));
-        mSchoolAddress.setText(pref.getString(Constants.SCHOOL_DETAILED_ADDRESS, "")+ ", " + pref.getString(Constants.SCHOOL_ADDRESS, ""));
-        mSchoolTelephone.setText(pref.getString(Constants.SCHOOL_PHONE, ""));
-        mSchoolFees.setText(pref.getString(Constants.SCHOOL_FFES, ""));
-        mSchoolEmail.setText(pref.getString(Constants.SCHOOL_EMAIL, ""));
+//        mSchoolImage = (ImageView) findViewById(R.id.school_image_from_firebase);
+//        mSchoolName = (TextView) findViewById(R.id.school_name_from_firebase);
+//        mSchoolMotto = (TextView) findViewById(R.id.school_motto_from_firebase);
+//        mSchoolAddress = (TextView) findViewById(R.id.school_address_from_firebase);
+//        mSchoolTelephone = (TextView) findViewById(R.id.school_phone_number_from_firebase);
+//        mSchoolFees = (TextView) findViewById(R.id.school_fees_range_from_firebase);
+//        mSchoolEmail = (TextView) findViewById(R.id.school_email_from_firebase);
+//
+//        pref = getSharedPreferences("SchoolDetails", android.content.Context.MODE_PRIVATE);
+//
+//        mSchoolImage.setImageBitmap(decodeBase64(pref.getString(Constants.SCHOOL_IMAGE, "")));
+//        mSchoolName.setText(pref.getString(Constants.SCHOOL_NAME, ""));
+//        mSchoolMotto.setText(pref.getString(Constants.SCHOOL_MOTTO, ""));
+//        mSchoolAddress.setText(pref.getString(Constants.SCHOOL_DETAILED_ADDRESS, "")+ ", " + pref.getString(Constants.SCHOOL_ADDRESS, ""));
+//        mSchoolTelephone.setText(pref.getString(Constants.SCHOOL_PHONE, ""));
+//        mSchoolFees.setText(pref.getString(Constants.SCHOOL_FFES, ""));
+//        mSchoolEmail.setText(pref.getString(Constants.SCHOOL_EMAIL, ""));
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
