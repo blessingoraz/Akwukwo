@@ -72,7 +72,6 @@ public class SignUpPageActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
 
     public void signUp(View view) {
@@ -148,7 +147,6 @@ public class SignUpPageActivity extends AppCompatActivity {
         } else {
             Utils.showLongMessage(Constants.CHECK_CONNECTION, SignUpPageActivity.this);
         }
-
     }
 
     public void compareEmail(final UserDetails userDetails, final String emailFromUserDetail, final String userdetailUid) {
@@ -211,6 +209,5 @@ public class SignUpPageActivity extends AppCompatActivity {
     public void loginPage(View view) {
         startActivity(new Intent(SignUpPageActivity.this, LoginActivity.class));
     }
-
 
 }

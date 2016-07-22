@@ -102,7 +102,6 @@ public class ViewPageActivity extends BaseActivity {
 
     private void logout(AuthData authData) {
 
-        Log.i("Checking authDat==>" + authData, "");
         this.mAuthData = authData;
 
         if (this.mAuthData != null) {
