@@ -3,10 +3,7 @@ package hk.ust.cse.comp107x.schoolapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,9 +13,10 @@ import android.widget.ImageView;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import hk.ust.cse.comp107x.schoolapp.LandingPages.LandingPageActivity;
-import hk.ust.cse.comp107x.schoolapp.LandingPages.SplashScreen;
 import hk.ust.cse.comp107x.schoolapp.Singletons.ColorCodes;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
+import hk.ust.cse.comp107x.schoolapp.Views.ViewPageActivity;
+import hk.ust.cse.comp107x.schoolapp.tool.Constants;
 import hk.ust.cse.comp107x.schoolapp.tool.ImageFilter;
 
 public class NoInternetActivity extends AppCompatActivity {

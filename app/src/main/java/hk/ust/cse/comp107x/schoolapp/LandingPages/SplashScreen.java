@@ -7,16 +7,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.os.Handler;
-import android.widget.Toast;
 
-import com.firebase.client.AuthData;
-import com.firebase.client.Firebase;
-
-import hk.ust.cse.comp107x.schoolapp.Constants;
+import hk.ust.cse.comp107x.schoolapp.tool.Constants;
 import hk.ust.cse.comp107x.schoolapp.NoInternetActivity;
 import hk.ust.cse.comp107x.schoolapp.R;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
-import hk.ust.cse.comp107x.schoolapp.ViewPageActivity;
+import hk.ust.cse.comp107x.schoolapp.Views.ViewPageActivity;
 
 public class SplashScreen extends AppCompatActivity {
 

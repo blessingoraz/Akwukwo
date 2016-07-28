@@ -18,7 +18,7 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <application
-        android:name=".SchoolAplication"
+        android:name=".tool.SchoolAplication"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
@@ -76,19 +76,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".Views.RegistrationActivity"
             android:label="@string/title_activity_registration"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".ViewPageActivity"
+            android:name=".Views.ViewPageActivity"
             android:label="@string/title_activity_view_page"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".ResetPasswordActivity"
+            android:name=".Views.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
@@ -100,19 +100,19 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".RegistrationCompleteActivity"
+            android:name=".Views.RegistrationCompleteActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".SearchLocationActivity"
+            android:name=".Views.SearchLocationActivity"
             android:label="@string/title_activity_search_location"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".ShowImage"
+            android:name=".tool.ShowImage"
             android:label="@string/title_activity_show_image"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
@@ -124,7 +124,7 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".UsersAccountActivity"
+            android:name=".Views.UsersAccountActivity"
             android:label="@string/title_activity_users_account"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >

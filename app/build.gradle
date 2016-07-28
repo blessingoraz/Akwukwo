@@ -35,10 +35,16 @@ android {
 
         }
     }
+
     productFlavors {
     }
+    
     dexOptions {
         javaMaxHeapSize "4g"
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 }
 

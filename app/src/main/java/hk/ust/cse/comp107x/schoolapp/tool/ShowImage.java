@@ -1,4 +1,4 @@
-package hk.ust.cse.comp107x.schoolapp;
+package hk.ust.cse.comp107x.schoolapp.tool;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -6,6 +6,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import hk.ust.cse.comp107x.schoolapp.R;
 
 public class ShowImage extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package hk.ust.cse.comp107x.schoolapp;
+package hk.ust.cse.comp107x.schoolapp.Views;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,11 +33,14 @@ import com.google.android.gms.plus.Plus;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import hk.ust.cse.comp107x.schoolapp.tool.Constants;
+import hk.ust.cse.comp107x.schoolapp.DetailOfEachSchool;
 import hk.ust.cse.comp107x.schoolapp.LandingPages.BaseActivity;
 import hk.ust.cse.comp107x.schoolapp.LandingPages.LandingPageActivity;
+import hk.ust.cse.comp107x.schoolapp.ListOfMySchhols;
+import hk.ust.cse.comp107x.schoolapp.R;
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
-import hk.ust.cse.comp107x.schoolapp.tool.UserDetailsManager;
 
 public class ViewPageActivity extends BaseActivity {
 

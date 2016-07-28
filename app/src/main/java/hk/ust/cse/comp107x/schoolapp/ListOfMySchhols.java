@@ -1,25 +1,17 @@
 package hk.ust.cse.comp107x.schoolapp;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,11 +24,12 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 
-import hk.ust.cse.comp107x.schoolapp.LandingPages.LoginActivity;
-import hk.ust.cse.comp107x.schoolapp.LandingPages.MainActivity;
-import hk.ust.cse.comp107x.schoolapp.LandingPages.SignUpPageActivity;
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
+import hk.ust.cse.comp107x.schoolapp.Views.RegistrationActivity;
+import hk.ust.cse.comp107x.schoolapp.Views.UsersAccountActivity;
+import hk.ust.cse.comp107x.schoolapp.Views.ViewPageActivity;
+import hk.ust.cse.comp107x.schoolapp.tool.Constants;
 
 public class ListOfMySchhols extends AppCompatActivity {
 

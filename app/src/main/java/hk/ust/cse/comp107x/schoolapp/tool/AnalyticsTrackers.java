@@ -1,4 +1,4 @@
-package hk.ust.cse.comp107x.schoolapp;
+package hk.ust.cse.comp107x.schoolapp.tool;
 
 import android.content.Context;
 
@@ -7,6 +7,8 @@ import com.google.android.gms.analytics.Tracker;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import hk.ust.cse.comp107x.schoolapp.R;
 
 /**
  * A collection of Google Analytics trackers. Fetch the tracker you need using

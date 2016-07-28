@@ -1,4 +1,4 @@
-package hk.ust.cse.comp107x.schoolapp;
+package hk.ust.cse.comp107x.schoolapp.Views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 
 import com.firebase.client.Firebase;
 
+import hk.ust.cse.comp107x.schoolapp.tool.Constants;
+import hk.ust.cse.comp107x.schoolapp.R;
 import hk.ust.cse.comp107x.schoolapp.Singletons.ColorCodes;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 import hk.ust.cse.comp107x.schoolapp.tool.ImageFilter;
