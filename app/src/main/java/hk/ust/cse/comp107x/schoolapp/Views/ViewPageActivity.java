@@ -37,8 +37,11 @@ import hk.ust.cse.comp107x.schoolapp.tool.Constants;
 import hk.ust.cse.comp107x.schoolapp.DetailOfEachSchool;
 import hk.ust.cse.comp107x.schoolapp.LandingPages.BaseActivity;
 import hk.ust.cse.comp107x.schoolapp.LandingPages.LandingPageActivity;
+<<<<<<< HEAD:app/src/main/java/hk/ust/cse/comp107x/schoolapp/ViewPageActivity.java
+=======
 import hk.ust.cse.comp107x.schoolapp.ListOfMySchhols;
 import hk.ust.cse.comp107x.schoolapp.R;
+>>>>>>> development:app/src/main/java/hk/ust/cse/comp107x/schoolapp/Views/ViewPageActivity.java
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 
@@ -76,7 +79,7 @@ public class ViewPageActivity extends BaseActivity {
                 return true;
 
             case R.id.my_schools:
-                startActivity(new Intent(ViewPageActivity.this, ListOfMySchhols.class));
+                startActivity(new Intent(ViewPageActivity.this, ListOfMySchools.class));
                 return true;
 
             case R.id.register_school:

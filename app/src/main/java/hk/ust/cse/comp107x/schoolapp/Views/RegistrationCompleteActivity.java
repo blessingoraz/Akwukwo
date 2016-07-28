@@ -45,9 +45,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+<<<<<<< HEAD:app/src/main/java/hk/ust/cse/comp107x/schoolapp/RegistrationCompleteActivity.java
+=======
 import hk.ust.cse.comp107x.schoolapp.tool.Constants;
 import hk.ust.cse.comp107x.schoolapp.ListOfMySchhols;
 import hk.ust.cse.comp107x.schoolapp.R;
+>>>>>>> development:app/src/main/java/hk/ust/cse/comp107x/schoolapp/Views/RegistrationCompleteActivity.java
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 
@@ -239,7 +242,7 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
                     ref.child("schools").child(schoolId).setValue(details);
                 }
 
-                startActivity(new Intent(RegistrationCompleteActivity.this, ListOfMySchhols.class));
+                startActivity(new Intent(RegistrationCompleteActivity.this, ListOfMySchools.class));
             }
 
         } else {

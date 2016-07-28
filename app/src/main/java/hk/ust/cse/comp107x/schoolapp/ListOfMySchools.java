@@ -31,7 +31,7 @@ import hk.ust.cse.comp107x.schoolapp.Views.UsersAccountActivity;
 import hk.ust.cse.comp107x.schoolapp.Views.ViewPageActivity;
 import hk.ust.cse.comp107x.schoolapp.tool.Constants;
 
-public class ListOfMySchhols extends AppCompatActivity {
+public class ListOfMySchools extends AppCompatActivity {
 
     private ProgressDialog mProgress;
     private TextView mDelete;
@@ -46,7 +46,7 @@ public class ListOfMySchhols extends AppCompatActivity {
 
     public boolean delete (int position) {
 
-        if(Utils.isOnLine(ListOfMySchhols.this)) {
+        if(Utils.isOnLine(ListOfMySchools.this)) {
             //save the item
             UserDetails details = mListOfSchools.get(position);
             //remove the item from the arraylist
@@ -58,7 +58,7 @@ public class ListOfMySchhols extends AppCompatActivity {
             return true;
         } else {
 
-            Utils.showShortToast("Check your internet", ListOfMySchhols.this);
+            Utils.showShortToast("Check your internet", ListOfMySchools.this);
             return false;
         }
 
@@ -70,21 +70,21 @@ public class ListOfMySchhols extends AppCompatActivity {
 
         switch (id) {
             case R.id.all_schools:
-                startActivity(new Intent(ListOfMySchhols.this, ViewPageActivity.class));
+                startActivity(new Intent(ListOfMySchools.this, ViewPageActivity.class));
                 return true;
 
             case R.id.my_schools:
                 return true;
 
             case R.id.register_school:
-                startActivity(new Intent(ListOfMySchhols.this, RegistrationActivity.class));
+                startActivity(new Intent(ListOfMySchools.this, RegistrationActivity.class));
                 return true;
             case R.id.my_account:
-                startActivity(new Intent(ListOfMySchhols.this, UsersAccountActivity.class));
+                startActivity(new Intent(ListOfMySchools.this, UsersAccountActivity.class));
                 return true;
 
             case R.id.logout:
-                Utils.showLongMessage("I am logout", ListOfMySchhols.this);
+                Utils.showLongMessage("I am logout", ListOfMySchools.this);
 
                 return true;
 
@@ -104,7 +104,7 @@ public class ListOfMySchhols extends AppCompatActivity {
     public void onBackPressed() {
 
         finish();
-        Intent intent = new Intent(ListOfMySchhols.this, ViewPageActivity.class);
+        Intent intent = new Intent(ListOfMySchools.this, ViewPageActivity.class);
         startActivity(intent);
     }
 
@@ -119,7 +119,7 @@ public class ListOfMySchhols extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ListOfMySchhols.this, ViewPageActivity.class));
+                startActivity(new Intent(ListOfMySchools.this, ViewPageActivity.class));
             }
         });
 
@@ -133,9 +133,9 @@ public class ListOfMySchhols extends AppCompatActivity {
 
         ref = new Firebase(Constants.FIREBASE_URL_USERS+"/"+id);
 
-        mProgress = ProgressDialog.show(ListOfMySchhols.this, "", getString(R.string.loading), true, false);
+        mProgress = ProgressDialog.show(ListOfMySchools.this, "", getString(R.string.loading), true, false);
 
-        if(Utils.isOnLine(ListOfMySchhols.this)) {
+        if(Utils.isOnLine(ListOfMySchools.this)) {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -145,7 +145,7 @@ public class ListOfMySchhols extends AppCompatActivity {
 
                     for(DataSnapshot schools: dataSnapshot.child("schools").getChildren()) {
 
-                        Utils.showLongMessage(schools.getKey(), ListOfMySchhols.this);
+                        Utils.showLongMessage(schools.getKey(), ListOfMySchools.this);
 
                          UserDetails details = schools.getValue(UserDetails.class);
                         details.setSchoolId( schools.getKey());
@@ -173,7 +173,7 @@ public class ListOfMySchhols extends AppCompatActivity {
             });
         } else {
 
-            Utils.showLongMessage(Constants.CHECK_CONNECTION, ListOfMySchhols.this);
+            Utils.showLongMessage(Constants.CHECK_CONNECTION, ListOfMySchools.this);
         }
 
     }
@@ -244,6 +244,79 @@ public class ListOfMySchhols extends AppCompatActivity {
             TextView schoolVision = (TextView)row.findViewById(R.id.vision);
             ImageView schoolImage = (ImageView)row.findViewById(R.id.image_from_firebase);
 
+<<<<<<< HEAD:app/src/main/java/hk/ust/cse/comp107x/schoolapp/ListOfMySchools.java
+            final TextView delete = (TextView)row.findViewById(R.id.delete);
+            TextView edit = (TextView)row.findViewById(R.id.edit);
+
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    // add a progress dialog
+                    SharedPreferences pref = getSharedPreferences("EachSchool", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+
+                    editor.putString(Constants.SCHOOL_NAME, userDetails.schoolName);
+                    editor.putString(Constants.SCHOOL_ADDRESS, userDetails.address);
+                    editor.putString(Constants.SCHOOL_MOTTO, userDetails.motto);
+                    editor.putString(Constants.SCHOOL_IMAGE, userDetails.schoolImage);
+                    editor.putString(Constants.SCHOOL_VISION, userDetails.vision);
+                    editor.putString(Constants.SCHOOL_FFES, userDetails.fees);
+                    editor.putString(Constants.SCHOOL_LEVEL, userDetails.level);
+                    editor.putString(Constants.SCHOOL_PHONE, userDetails.phone);
+                    editor.putString(Constants.SCHOOL_EMAIL, userDetails.schoolEmail);
+                    editor.putString(Constants.SCHOOL_DETAILED_ADDRESS, userDetails.detailedAddress);
+                    editor.putString(Constants.SCHOOL_LATITUDE, userDetails.latitude);
+                    editor.putString(Constants.SCHOOL_LONGITUDE, userDetails.longitude);
+                    editor.putString(Constants.SCHOOL_ID, userDetails.schoolId);
+                    editor.putString(Constants.SCHOOL_ALL_ID, userDetails.allSchoolId);
+
+                    editor.commit();
+                    startActivity(new Intent(ListOfMySchools.this, RegistrationActivity.class));
+                }
+            });
+
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    final SharedPreferences pref = getSharedPreferences("SchoolDetails", Context.MODE_PRIVATE);
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ListOfMySchools.this);
+                    builder.setTitle("Are you sure you want to delete this entry?");
+
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            delete(position);
+
+                            ref = new Firebase(Constants.FIREBASE_URL_USERS+"/"+id+"/schools/"+userDetails.schoolId);
+                            ref.removeValue();
+
+                            String id = pref.getString(Constants.SCHOOL_ALL_ID, "");
+                            Firebase schoolRef = new Firebase(Constants.FIREBASE_URL+"/schools");
+                            schoolRef.child(id).removeValue();
+
+                        }
+                    });
+
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            return;
+                        }
+                    });
+
+                    builder.create();
+                    builder.show();
+                }
+            });
+
+            schoolName.setText(userDetails.schoolName);
+            schoolVision.setText(userDetails.vision);
+            schoolImage.setImageBitmap(Utils.decodeBase64(userDetails.schoolImage));
+=======
 //            final TextView delete = (TextView)row.findViewById(R.id.delete);
 //            TextView edit = (TextView)row.findViewById(R.id.edit);
 
@@ -315,6 +388,7 @@ public class ListOfMySchhols extends AppCompatActivity {
             schoolName.setText(userDetails.getSchoolName());
             schoolVision.setText(userDetails.getVision());
             schoolImage.setImageBitmap(Utils.decodeBase64(userDetails.getSchoolImage()));
+>>>>>>> development:app/src/main/java/hk/ust/cse/comp107x/schoolapp/ListOfMySchhols.java
             return row;
         }
     }

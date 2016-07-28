@@ -122,4 +122,9 @@ public class SchoolDetails {
     public String detailedAddress;
     public String latitude;
     public String longitude;
+
+    @Override
+    public String toString(){
+        return schoolName+"\n"+schoolEmail+"\n"+address+"\n"+vision;
+    }
 }

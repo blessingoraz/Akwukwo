@@ -17,7 +17,11 @@ import com.firebase.client.FirebaseError;
 
 import hk.ust.cse.comp107x.schoolapp.tool.Constants;
 import hk.ust.cse.comp107x.schoolapp.R;
+<<<<<<< HEAD
+import hk.ust.cse.comp107x.schoolapp.ResetPasswordActivity;
+=======
 import hk.ust.cse.comp107x.schoolapp.Views.ResetPasswordActivity;
+>>>>>>> development
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 import hk.ust.cse.comp107x.schoolapp.Views.ViewPageActivity;
 
@@ -30,6 +34,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private Boolean exit = false;
 
+<<<<<<< HEAD
+    public LoginActivity(EditText mUserLoginEmail, EditText mUserLoginPassword) {
+        this.mUserLoginEmail = mUserLoginEmail;
+        this.mUserLoginPassword = mUserLoginPassword;
+    }
+
+=======
+>>>>>>> development
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
