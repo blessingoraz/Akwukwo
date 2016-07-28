@@ -1,4 +1,4 @@
-package hk.ust.cse.comp107x.schoolapp;
+package hk.ust.cse.comp107x.schoolapp.tool;
 
 import android.app.Application;
 

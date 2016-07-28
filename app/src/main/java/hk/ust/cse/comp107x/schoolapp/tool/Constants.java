@@ -1,4 +1,4 @@
-package hk.ust.cse.comp107x.schoolapp;
+package hk.ust.cse.comp107x.schoolapp.tool;
 
 /**
  * Created by blessingorazulume on 2/1/16.

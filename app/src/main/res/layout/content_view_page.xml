@@ -9,7 +9,7 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_view_page"
-    tools:context="hk.ust.cse.comp107x.schoolapp.ViewPageActivity">
+    tools:context=".Views.ViewPageActivity">
 
     <ListView
         android:id="@+id/get_all_registered_schools"

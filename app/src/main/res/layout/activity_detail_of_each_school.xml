@@ -1,182 +1,173 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E9E9E9">
 
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:id="@+id/map"
-        tools:context="hk.ust.cse.comp107x.schoolapp.DetailOfEachSchool"
-        android:name="com.google.android.gms.maps.SupportMapFragment">
-    </fragment>
-
     <android.support.v7.widget.CardView
-        android:background="#20ffffff"
-        android:layout_width="match_parent"
-        android:layout_height="320dp"
         android:id="@+id/detailsCardView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/map"
         android:layout_gravity="center"
-        android:layout_below="@+id/map">
+        android:background="#20ffffff">
+
+        <TextView
+            android:id="@+id/school_name_from_firebase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sacred Heart Catholic College"
+            android:textColor="@color/colorSchoolName"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/school_image_from_firebase"
-                android:layout_weight="3"
-                android:layout_width="0dp"
+                android:layout_width="120dp"
                 android:layout_height="100dp"
-                android:src="@drawable/pic"/>
+                android:src="@drawable/pic"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"/>
 
-            <TextView
-                android:id="@+id/school_name_from_firebase"
-                android:layout_weight="6"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Sacred Heart Catholic College"
-                android:textSize="20sp"
-                android:textColor="#212121"/>
+
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/school_motto_from_firebase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="We provide the best in Education"
-            android:layout_marginStart="130dp"
-            android:layout_alignBottom="@+id/detailsCardView"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="80dp"
-            android:textColor="#898b87"
-            android:textSize="15sp"/>
+        <!--<TextView-->
+            <!--android:id="@+id/school_motto_from_firebase"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignBottom="@+id/detailsCardView"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_marginStart="130dp"-->
+            <!--android:layout_marginTop="80dp"-->
+            <!--android:text="We provide the best in Education"-->
+            <!--android:textColor="#898b87"-->
+            <!--android:textSize="15sp" />-->
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="130dp"
-            android:layout_marginTop="120dp">
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="130dp"-->
+            <!--android:layout_marginTop="120dp"-->
+            <!--android:orientation="horizontal">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ADDRESS"/>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TEL:"
-                android:layout_marginStart="50dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="130dp"
-            android:layout_marginTop="140dp">
-
-            <TextView
-                android:id="@+id/school_address_from_firebase"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="25, olori-mango road bh hjuu hhj jj"/>
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="ADDRESS" />-->
 
 
-            <TextView
-                android:id="@+id/school_phone_number_from_firebase"
-                android:layout_weight="10"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="08047567890"
-                android:layout_marginLeft="15dp"/>
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="50dp"-->
+                <!--android:text="TEL:" />-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="130dp"
-            android:layout_marginTop="210dp">
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="130dp"-->
+            <!--android:layout_marginTop="140dp"-->
+            <!--android:orientation="horizontal">-->
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="FEES"/>
+            <!--<TextView-->
+                <!--android:id="@+id/school_address_from_firebase"-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="25, olori-mango road bh hjuu hhj jj" />-->
 
+            <!--<TextView-->
+                <!--android:id="@+id/school_phone_number_from_firebase"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_weight="10"-->
+                <!--android:text="08047567890" />-->
 
-            <TextView
-                android:layout_weight="10"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="EMAIL:"
-                android:layout_marginLeft="15dp"/>
+        <!--</LinearLayout>-->
 
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="130dp"-->
+            <!--android:layout_marginTop="210dp"-->
+            <!--android:orientation="horizontal">-->
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="130dp"
-            android:layout_marginTop="230dp">
+            <!--<TextView-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="FEES" />-->
 
-            <TextView
-                android:id="@+id/school_fees_range_from_firebase"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="5000 - 10000"/>
+            <!--<TextView-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_weight="10"-->
+                <!--android:text="EMAIL:" />-->
 
+        <!--</LinearLayout>-->
 
-            <TextView
-                android:id="@+id/school_email_from_firebase"
-                android:layout_weight="10"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="sacredheartcatholiccollege@gmail.com"
-                android:layout_marginLeft="15dp"/>
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="130dp"-->
+            <!--android:layout_marginTop="230dp"-->
+            <!--android:orientation="horizontal">-->
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="130dp"
+            <!--<TextView-->
+                <!--android:id="@+id/school_fees_range_from_firebase"-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="5000 - 10000" />-->
 
-            android:layout_marginTop="260dp">
+            <!--<TextView-->
+                <!--android:id="@+id/school_email_from_firebase"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_weight="10"-->
+                <!--android:text="sacredheartcatholiccollege@gmail.com" />-->
+        <!--</LinearLayout>-->
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="LEVEL"/>
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="130dp"-->
+            <!--android:layout_marginTop="260dp"-->
 
-        </LinearLayout>
+            <!--android:orientation="horizontal">-->
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="130dp"
-            android:layout_marginTop="280dp">
+            <!--<TextView-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="LEVEL" />-->
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="Primary"/>
+        <!--</LinearLayout>-->
 
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="130dp"-->
+            <!--android:layout_marginTop="280dp"-->
+            <!--android:orientation="horizontal">-->
 
+            <!--<TextView-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Primary" />-->
+
+        <!--</LinearLayout>-->
 
     </android.support.v7.widget.CardView>
 

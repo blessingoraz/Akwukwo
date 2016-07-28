@@ -15,11 +15,15 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
-import hk.ust.cse.comp107x.schoolapp.Constants;
+import hk.ust.cse.comp107x.schoolapp.tool.Constants;
 import hk.ust.cse.comp107x.schoolapp.R;
+<<<<<<< HEAD
 import hk.ust.cse.comp107x.schoolapp.ResetPasswordActivity;
+=======
+import hk.ust.cse.comp107x.schoolapp.Views.ResetPasswordActivity;
+>>>>>>> development
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
-import hk.ust.cse.comp107x.schoolapp.ViewPageActivity;
+import hk.ust.cse.comp107x.schoolapp.Views.ViewPageActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -30,11 +34,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private Boolean exit = false;
 
+<<<<<<< HEAD
     public LoginActivity(EditText mUserLoginEmail, EditText mUserLoginPassword) {
         this.mUserLoginEmail = mUserLoginEmail;
         this.mUserLoginPassword = mUserLoginPassword;
     }
 
+=======
+>>>>>>> development
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +55,8 @@ public class LoginActivity extends AppCompatActivity {
         mUserLoginPassword.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(event.getAction() == KeyEvent.ACTION_DOWN) {
-                    switch (keyCode){
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
                             Utils.hideSoftKeyboard(LoginActivity.this);
@@ -70,9 +77,9 @@ public class LoginActivity extends AppCompatActivity {
         mUserLoginEmail.setText(emailFromSharedPref);
     }
 
-    public void login(View view){
+    public void login(View view) {
 
-        if(Utils.isOnLine(LoginActivity.this)) {
+        if (Utils.isOnLine(LoginActivity.this)) {
 
             mProgress = ProgressDialog.show(LoginActivity.this, "", getString(R.string.loading), true, false);
             ref = new Firebase(Constants.FIREBASE_URL_USERS);

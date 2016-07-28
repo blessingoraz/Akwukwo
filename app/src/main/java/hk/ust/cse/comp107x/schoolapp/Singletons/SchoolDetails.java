@@ -17,11 +17,12 @@ public class SchoolDetails {
 
     public SchoolDetails(UserDetails details) {
 
-        System.out.println("Getting here ======>" + details+"");
+        System.out.println("Getting here ======>" + details + "");
 
 //        setSchoolName(details.toString().replace("{", "").replace("}",""));
 
     }
+
     public String getSchoolName() {
         return schoolName;
     }

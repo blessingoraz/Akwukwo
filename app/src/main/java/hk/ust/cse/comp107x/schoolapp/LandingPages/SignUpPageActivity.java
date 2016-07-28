@@ -19,12 +19,12 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.Map;
 
-import hk.ust.cse.comp107x.schoolapp.Constants;
+import hk.ust.cse.comp107x.schoolapp.tool.Constants;
 import hk.ust.cse.comp107x.schoolapp.R;
-import hk.ust.cse.comp107x.schoolapp.RegistrationActivity;
+import hk.ust.cse.comp107x.schoolapp.Views.RegistrationActivity;
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
-import hk.ust.cse.comp107x.schoolapp.ViewPageActivity;
+import hk.ust.cse.comp107x.schoolapp.Views.ViewPageActivity;
 
 public class SignUpPageActivity extends AppCompatActivity {
 
@@ -58,8 +58,8 @@ public class SignUpPageActivity extends AppCompatActivity {
         mUserPassword.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(event.getAction() == KeyEvent.ACTION_DOWN) {
-                    switch (keyCode){
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
                             Utils.hideSoftKeyboard(SignUpPageActivity.this);
@@ -72,12 +72,11 @@ public class SignUpPageActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
 
     public void signUp(View view) {
 
-        if(Utils.isOnLine(SignUpPageActivity.this)) {
+        if (Utils.isOnLine(SignUpPageActivity.this)) {
 
             SharedPreferences pref = getSharedPreferences("UserDetails", MODE_PRIVATE);
 
@@ -87,27 +86,23 @@ public class SignUpPageActivity extends AppCompatActivity {
             final String name = mUserName.getText().toString().trim();
             final String password = mUserPassword.getText().toString().trim();
 
-            if(Utils.isEmpty(email)) {
+            if (Utils.isEmpty(email)) {
                 mUserEmail.setError("This field is required");
-            }
-
-            else if(Utils.isEmpty(name)) {
+            } else if (Utils.isEmpty(name)) {
                 mUserName.setError("This field is required");
-            }
-            else if(Utils.isEmpty(password)) {
+            } else if (Utils.isEmpty(password)) {
                 mUserPassword.setError("This field is required");
-            }
-
-            else if(!isPasswordValid(password)) {
-                mUserPassword.setError( "Password is too short" );
+            } else if (!isPasswordValid(password)) {
+                mUserPassword.setError("Password is too short");
                 mUserPassword.setHint("input password");
             }
 
             // Remove this
-            
-            else if(Utils.isNotEmpty(email) && Utils.isNotEmpty(name) && Utils.isNotEmpty(password)) {
 
-                mProgress = ProgressDialog.show(SignUpPageActivity.this, "", getString(R.string.loading), true, false);
+            else if (Utils.isNotEmpty(email) && Utils.isNotEmpty(name) && Utils.isNotEmpty(password)) {
+
+                mProgress = ProgressDialog.show(
+                        SignUpPageActivity.this, "", getString(R.string.loading), true, false);
                 ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
                     @Override
                     public void onSuccess(Map<String, Object> result) {
@@ -116,10 +111,10 @@ public class SignUpPageActivity extends AppCompatActivity {
                             mProgress.dismiss();
 
                         UserDetails userDetails = new UserDetails();
-                        userDetails.name = name;
-                        userDetails.email = email;
-                        userDetails.password = password;
-                        userDetails.accessToken = (String) result.get("uid");
+                        userDetails.setName(name);
+                        userDetails.setEmail(email);
+                        userDetails.setPassword(password);
+                        userDetails.setAccessToken((String) result.get("uid"));
 
                         String uid = (String) result.get("uid");
 
@@ -147,7 +142,6 @@ public class SignUpPageActivity extends AppCompatActivity {
         } else {
             Utils.showLongMessage(Constants.CHECK_CONNECTION, SignUpPageActivity.this);
         }
-
     }
 
     public void compareEmail(final UserDetails userDetails, final String emailFromUserDetail, final String userdetailUid) {
@@ -181,7 +175,7 @@ public class SignUpPageActivity extends AppCompatActivity {
         return password.length() > 3;
     }
 
-//    public
+    //    public
     public void alertDialog() {
         AlertDialog.Builder builder = new android.app.AlertDialog.Builder(SignUpPageActivity.this);
         builder.setTitle("Do you want to register a school?");
@@ -210,6 +204,5 @@ public class SignUpPageActivity extends AppCompatActivity {
     public void loginPage(View view) {
         startActivity(new Intent(SignUpPageActivity.this, LoginActivity.class));
     }
-
 
 }

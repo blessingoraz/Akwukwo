@@ -1,4 +1,4 @@
-package hk.ust.cse.comp107x.schoolapp;
+package hk.ust.cse.comp107x.schoolapp.Views;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,8 +33,15 @@ import com.google.android.gms.plus.Plus;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import hk.ust.cse.comp107x.schoolapp.tool.Constants;
+import hk.ust.cse.comp107x.schoolapp.DetailOfEachSchool;
 import hk.ust.cse.comp107x.schoolapp.LandingPages.BaseActivity;
 import hk.ust.cse.comp107x.schoolapp.LandingPages.LandingPageActivity;
+<<<<<<< HEAD:app/src/main/java/hk/ust/cse/comp107x/schoolapp/ViewPageActivity.java
+=======
+import hk.ust.cse.comp107x.schoolapp.ListOfMySchhols;
+import hk.ust.cse.comp107x.schoolapp.R;
+>>>>>>> development:app/src/main/java/hk/ust/cse/comp107x/schoolapp/Views/ViewPageActivity.java
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 
@@ -101,7 +107,6 @@ public class ViewPageActivity extends BaseActivity {
 
     private void logout(AuthData authData) {
 
-        Log.i("Checking authDat==>" + authData, "");
         this.mAuthData = authData;
 
         if (this.mAuthData != null) {
@@ -132,17 +137,16 @@ public class ViewPageActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        mGoogleApiClient = ((MainActivity)getApplicationContext()).buildApiClient();
 
         listView = (ListView) findViewById(R.id.get_all_registered_schools);
 
-        mGetMoreSchools = (Button) findViewById(R.id.more);
-        mGetMoreSchools.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setupListview();
-            }
-        });
+//        mGetMoreSchools = (Button) findViewById(R.id.more);
+//        mGetMoreSchools.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setupListview();
+//            }
+//        });
 
         SharedPreferences preferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         Firebase.setAndroidContext(this);
@@ -186,7 +190,6 @@ public class ViewPageActivity extends BaseActivity {
 
                     if (mProgress != null)
                         mProgress.dismiss();
-
                 }
             });
 
@@ -207,30 +210,6 @@ public class ViewPageActivity extends BaseActivity {
 
         Collections.reverse(mListOfSchools);
 
-//        int size = 0;
-//
-//        UserDetailsManager manager = new UserDetailsManager(size+=3);
-//
-//        for (int i = 0; i < size; i++) {
-//
-//            if( i < mListOfSchools.size())
-//                manager.addDetails(mListOfSchools.get(i));
-//        }
-//
-//
-//        modifiedContent = new ArrayList<>();
-//
-//        if (modifiedContent != null) {
-//
-//            for (int i = 0; i < manager.schools.length; i++) {
-//                if (!manager.schools[i].address.isEmpty())
-//                    modifiedContent.add(manager.schools[i]);
-//            }
-//
-//        } else {
-//
-//            Utils.showLongMessage("No schools registered yet", ViewPageActivity.this);
-//        }
 
         // we had modifiedContent in place of mListOfSchools
 
@@ -246,28 +225,26 @@ public class ViewPageActivity extends BaseActivity {
                 SharedPreferences pref = getSharedPreferences("SchoolDetails", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
 
-                editor.putString(Constants.SCHOOL_NAME, userDetails.schoolName);
-                editor.putString(Constants.SCHOOL_ADDRESS, userDetails.address);
-                editor.putString(Constants.SCHOOL_MOTTO, userDetails.motto);
-                editor.putString(Constants.SCHOOL_IMAGE, userDetails.schoolImage);
-                editor.putString(Constants.SCHOOL_VISION, userDetails.vision);
-                editor.putString(Constants.SCHOOL_FFES, userDetails.fees);
-                editor.putString(Constants.SCHOOL_LEVEL, userDetails.level);
-                editor.putString(Constants.SCHOOL_PHONE, userDetails.phone);
-                editor.putString(Constants.SCHOOL_EMAIL, userDetails.schoolEmail);
-                editor.putString(Constants.SCHOOL_DETAILED_ADDRESS, userDetails.detailedAddress);
-                editor.putString(Constants.SCHOOL_LATITUDE, userDetails.latitude);
-                editor.putString(Constants.SCHOOL_LONGITUDE, userDetails.longitude);
+                editor.putString(Constants.SCHOOL_NAME, userDetails.getSchoolName());
+                editor.putString(Constants.SCHOOL_ADDRESS, userDetails.getAddress());
+                editor.putString(Constants.SCHOOL_MOTTO, userDetails.getMotto());
+                editor.putString(Constants.SCHOOL_IMAGE, userDetails.getSchoolImage());
+                editor.putString(Constants.SCHOOL_VISION, userDetails.getVision());
+                editor.putString(Constants.SCHOOL_FFES, userDetails.getFees());
+                editor.putString(Constants.SCHOOL_LEVEL, userDetails.getLevel());
+                editor.putString(Constants.SCHOOL_PHONE, userDetails.getPhone());
+                editor.putString(Constants.SCHOOL_EMAIL, userDetails.getEmail());
+                editor.putString(Constants.SCHOOL_DETAILED_ADDRESS, userDetails.getDetailedAddress());
+                editor.putString(Constants.SCHOOL_LATITUDE, userDetails.getLatitude());
+                editor.putString(Constants.SCHOOL_LONGITUDE, userDetails.getLongitude());
 //                editor.putString(Constants.SCHOOL_ALL_ID, userDetails.schoolId);
 
                 editor.commit();
 
                 startActivity(new Intent(ViewPageActivity.this, DetailOfEachSchool.class));
-
             }
         });
     }
-
 
     public class MySchoolAdapter extends BaseAdapter {
 
@@ -311,14 +288,10 @@ public class ViewPageActivity extends BaseActivity {
                 TextView schoolName = (TextView)row.findViewById(R.id.name_from_firebase);
                 TextView schoolVision = (TextView)row.findViewById(R.id.vision);
                 ImageView schoolImage = (ImageView)row.findViewById(R.id.image_from_firebase);
-                TextView edit = (TextView)row.findViewById(R.id.edit);
-                TextView delete = (TextView)row.findViewById(R.id.delete);
 
-                schoolName.setText(userDetails.schoolName);
-                schoolVision.setText(userDetails.vision);
-                schoolImage.setImageBitmap(decodeBase64(userDetails.schoolImage));
-                delete.setText("");
-                edit.setText("More details");
+                schoolName.setText(userDetails.getSchoolName());
+                schoolVision.setText(userDetails.getVision());
+                schoolImage.setImageBitmap(decodeBase64(userDetails.getSchoolImage()));
 
             }catch (Exception e) {e.printStackTrace();}
 

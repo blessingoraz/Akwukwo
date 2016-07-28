@@ -57,6 +57,7 @@ public class LandingPageActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 switchToPostion(position);
+
             }
 
             @Override
@@ -72,6 +73,7 @@ public class LandingPageActivity extends AppCompatActivity {
 
             super(fm);
         }
+
         @Override
         public Fragment getItem(int position) {
 
@@ -93,12 +95,12 @@ public class LandingPageActivity extends AppCompatActivity {
         }
     }
 
-    int switchToPostion(int position){
+    int switchToPostion(int position) {
         // declare images for the current postion...
         int[] animatedImage = new int[]{R.drawable.indicator1, R.drawable.indicator2, R.drawable.indicator3};
 
         //...and set the image appropriate for the current page
-        animatedImageImage.setImageResource (animatedImage[position]);
+        animatedImageImage.setImageResource(animatedImage[position]);
 
         //return the current position of the page
 

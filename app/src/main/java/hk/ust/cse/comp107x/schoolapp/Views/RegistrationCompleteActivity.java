@@ -1,4 +1,4 @@
-package hk.ust.cse.comp107x.schoolapp;
+package hk.ust.cse.comp107x.schoolapp.Views;
 
 import android.app.Activity;
 import android.content.Context;
@@ -37,11 +37,20 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+<<<<<<< HEAD:app/src/main/java/hk/ust/cse/comp107x/schoolapp/RegistrationCompleteActivity.java
+=======
+import hk.ust.cse.comp107x.schoolapp.tool.Constants;
+import hk.ust.cse.comp107x.schoolapp.ListOfMySchhols;
+import hk.ust.cse.comp107x.schoolapp.R;
+>>>>>>> development:app/src/main/java/hk/ust/cse/comp107x/schoolapp/Views/RegistrationCompleteActivity.java
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
 
@@ -85,13 +94,12 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationIcon(R.drawable.arrow);
-//        toolbar.setSubtitle("Order details");
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(RegistrationCompleteActivity.this, RegistrationActivity.class));
+                startActivity(new Intent(
+                        RegistrationCompleteActivity.this, RegistrationActivity.class));
             }
         });
 
@@ -141,7 +149,6 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
 
         pref = getSharedPreferences("EachSchool", Context.MODE_PRIVATE);
 
-//        setupElementValues();
         mSchoolImage.setImageBitmap(Utils.decodeBase64(pref.getString(Constants.SCHOOL_IMAGE, "")));
         mSchoolVision.setText(pref.getString(Constants.SCHOOL_VISION, ""));
         mEmail.setText(pref.getString(Constants.SCHOOL_EMAIL, ""));
@@ -150,7 +157,7 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
 
     }
 
-    public void registerSchool(View view) {
+    public void registerSchoolBtn(View view) {
 
         if(Utils.isOnLine(RegistrationCompleteActivity.this)) {
 
@@ -180,51 +187,48 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
 
             else if(mSchoolImage.getDrawable() == null) {
 
-                Utils.showShortToast("select an image of the school", RegistrationCompleteActivity.this);
+                Utils.showShortToast(
+                        "select an image of the school", RegistrationCompleteActivity.this);
             }
 
-            else if(mFeesRange.getSelectedItem().toString().trim().equals("-- select fees range --")) {
+            else if(mFeesRange.getSelectedItem().toString().trim().equals(
+                    "-- select fees range --")) {
                 Utils.showShortToast("select fees range", RegistrationCompleteActivity.this);
                 return;
             }
 
-            else if (Utils.isNotEmpty(mSchoolVision.getText().toString().trim()) && Utils.isNotEmpty(mPhoneNumber.getText().toString().trim()) &&
-                    Utils.isNotEmpty(mDetailedAddress.getText().toString().trim()) && Utils.isNotEmpty(mEmail.getText().toString().trim())) {
-
-                String vision = mSchoolVision.getText().toString();
-
-                int selectedLevel = mSchoolLevel.getCheckedRadioButtonId();
-                mSelectedLevel = (RadioButton) findViewById(selectedLevel);
-                String level = mSelectedLevel.getText().toString();
-
-                String fees = mFeesRange.getSelectedItem().toString();
-                String phonenumber = mPhoneNumber.getText().toString();
-                String email = mEmail.getText().toString();
-                String detailedAddress = mDetailedAddress.getText().toString();
+            else if (Utils.isNotEmpty(mSchoolVision.getText().toString().trim()) && Utils.isNotEmpty(mPhoneNumber.getText().toString().trim()) && Utils.isNotEmpty(mDetailedAddress.getText().toString().trim()) && Utils.isNotEmpty(mEmail.getText().toString().trim())) {
 
                 SharedPreferences preferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
                 SharedPreferences preferences1 = getSharedPreferences("Location", Context.MODE_PRIVATE);
 
-                String name = preferences.getString(Constants.SCHOOL_NAME, "");
-                String address = preferences.getString(Constants.SCHOOL_ADDRESS, "");
-                String motto = preferences.getString(Constants.SCHOOL_MOTTO, "");
-                String id = preferences.getString(Constants.USER_TOKEN, "");
-                String image = preferences.getString(Constants.SCHOOL_IMAGE, "");
+                int selectedLevel = mSchoolLevel.getCheckedRadioButtonId();
+                mSelectedLevel = (RadioButton) findViewById(selectedLevel);
+
+                //get date.now
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Calendar cal = Calendar.getInstance();
+
 
                 UserDetails details = new UserDetails();
+                details.setSchoolName(preferences.getString(Constants.SCHOOL_NAME, ""));
+                details.setAddress(preferences.getString(Constants.SCHOOL_ADDRESS, ""));
+                details.setMotto(preferences.getString(Constants.SCHOOL_MOTTO, ""));
+                details.setVision(mSchoolVision.getText().toString().trim());
+                details.setFees(mFeesRange.getSelectedItem().toString());
+                details.setLevel(mSelectedLevel.getText().toString().trim());
+                details.setPhone(mPhoneNumber.getText().toString().trim());
+                details.setEmail(mEmail.getText().toString().trim());
+                details.setDetailedAddress(mDetailedAddress.getText().toString().trim());
+                details.setSchoolImage(preferences.getString(Constants.SCHOOL_IMAGE, "")); //TODO Check this out ASAP
+                details.setLatitude(preferences1.getString(Constants.SCHOOL_LATITUDE, ""));
+                details.setLongitude(preferences1.getString(Constants.SCHOOL_LONGITUDE, ""));
+                details.setCurrentDate(dateFormat.format(cal.getTime()));
 
-                details.schoolName = name;
-                details.address = address;
-                details.motto = motto;
-                details.vision = vision;
-                details.fees = fees;
-                details.level = level;
-                details.phone = phonenumber;
-                details.schoolEmail = email;
-                details.schoolImage = image;
-                details.detailedAddress = detailedAddress;
-                details.latitude = preferences1.getString("latitude", "");
-                details.longitude = preferences1.getString("longitude", "");
+                String id = preferences.getString(Constants.USER_TOKEN, "");
+
+                ref.child("users").child(id).child("schools").push().setValue(details);
+                ref.child("schools").push().setValue(details);
 
 
                 if(pref.getString(Constants.SCHOOL_ID, "").equals("")) {
@@ -233,26 +237,18 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
                     ref.child("schools").push().setValue(details);
 
                 } else {
-
                     String schoolId = pref.getString(Constants.SCHOOL_ID, "");
                     ref.child("users").child(id).child("schools").child(schoolId).setValue(details);
-
-                    //change the id to the id from view activity.
-//                    SharedPreferences preferences2 = getSharedPreferences()
-//                    String AllSchoolId =
                     ref.child("schools").child(schoolId).setValue(details);
                 }
 
                 startActivity(new Intent(RegistrationCompleteActivity.this, ListOfMySchools.class));
             }
 
-
         } else {
 
             Utils.showLongMessage(Constants.CHECK_CONNECTION, RegistrationCompleteActivity.this);
         }
-
-
     }
 
     Bitmap getImageFromFile(String fileName) {

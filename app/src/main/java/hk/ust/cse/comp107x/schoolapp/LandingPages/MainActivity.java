@@ -41,12 +41,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import hk.ust.cse.comp107x.schoolapp.Constants;
+import hk.ust.cse.comp107x.schoolapp.tool.Constants;
 import hk.ust.cse.comp107x.schoolapp.R;
-import hk.ust.cse.comp107x.schoolapp.RegistrationActivity;
+import hk.ust.cse.comp107x.schoolapp.Views.RegistrationActivity;
 import hk.ust.cse.comp107x.schoolapp.Singletons.UserDetails;
 import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
-import hk.ust.cse.comp107x.schoolapp.ViewPageActivity;
+import hk.ust.cse.comp107x.schoolapp.Views.ViewPageActivity;
 
 public class MainActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -114,7 +114,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.Connec
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
 
-        if(callbackManager.onActivityResult(requestCode, resultCode, data)) {
+        if (callbackManager.onActivityResult(requestCode, resultCode, data)) {
             return;
         }
 
@@ -188,14 +188,14 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.Connec
                                     @Override
                                     public void onCompleted(JSONObject object, GraphResponse response) {
 
-                                        mProgress = ProgressDialog.show(MainActivity.this,"",getString(R.string.loading), true, false);
+                                        mProgress = ProgressDialog.show(MainActivity.this, "", getString(R.string.loading), true, false);
                                         if (response != null) {
                                             try {
 
                                                 if (mProgress != null)
                                                     mProgress.dismiss();
 
-                                               AccessToken token = loginResult.getAccessToken();
+                                                AccessToken token = loginResult.getAccessToken();
 
                                                 onFacebookAccessTokenChange(token);
 
@@ -233,18 +233,18 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.Connec
                     }
                 });
 
-                mFacebookLogin.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                            ArrayList<String> permissions = new ArrayList<>();
-                            permissions.add("public_profile");
-                            permissions.add("user_friends");
-                            permissions.add("email");
-                            LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, permissions);
+        mFacebookLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<String> permissions = new ArrayList<>();
+                permissions.add("public_profile");
+                permissions.add("user_friends");
+                permissions.add("email");
+                LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, permissions);
 
 
-                    }
-                });
+            }
+        });
     }
 
     public void onFacebookAccessTokenChange(AccessToken loginToken) {
@@ -255,52 +255,59 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.Connec
 
         final Firebase userRef = ref.child("users");
 
-            if(loginToken != null) {
+        if (loginToken != null) {
 
-                ref.authWithOAuthToken("facebook", loginToken.getToken(), new Firebase.AuthResultHandler() {
-                    @Override
-                    public void onAuthenticated(AuthData authData) {
+            ref.authWithOAuthToken("facebook", loginToken.getToken(), new Firebase.AuthResultHandler() {
+                @Override
+                public void onAuthenticated(AuthData authData) {
 
-                        final UserDetails details = new UserDetails();
-                        details.name = authData.getProviderData().get("displayName").toString();
-                        details.id = authData.getUid();
+                    final UserDetails details = new UserDetails();
+                    details.setName(authData.getProviderData().get("displayName").toString());
+                    details.setId(authData.getUid());
 
-                        String emailAvailable = authData.getProviderData().get("email").toString();
-                        details.email = (emailAvailable == null) ? "email@email.com" : emailAvailable;;
-                        details.accessToken = authData.getToken();
+                    String emailAvailable = authData.getProviderData().get("email").toString();
+                    details.email = (emailAvailable == null) ? "email@email.com" : emailAvailable;
+                    ;
+                    details.setAccessToken(authData.getToken());
 
-                        userRef.child(authData.getUid()).setValue(details);
+                    userRef.child(authData.getUid()).setValue(details);
 
-                        if(authData != null) {
+                    if (authData != null) {
 
-                            String uid = authData.getUid();
+                        String uid = authData.getUid();
 
-                            editor.putString(Constants.USER_TOKEN, uid);
-                            editor.putString(Constants.USER_NAME, authData.getProviderData().get("displayName").toString());
-                            editor.putString(Constants.USER_EMAIL,emailAvailable );
+                        editor.putString(Constants.USER_TOKEN, uid);
+                        editor.putString(Constants.USER_NAME, authData.getProviderData().get("displayName").toString());
+                        editor.putString(Constants.USER_EMAIL, emailAvailable);
 
-                            editor.apply();
+                        editor.apply();
 
-                            alertDialog();
-                        }
-
+<<<<<<< HEAD
                         else {
                             Utils.showLongMessage("Login Failed",getApplicationContext());
                         }
 //                    userDetails.put("profile", picture.get))
                         //We are already logged in and we can go to Landing Page
+=======
+                        alertDialog();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_LONG).show();
+>>>>>>> development
                     }
+//                    userDetails.put("profile", picture.get))
+                    //We are already logged in and we can go to Landing Page
+                }
 
-                    @Override
-                    public void onAuthenticationError(FirebaseError firebaseError) {
-                        System.out.println("An error has occurred" + firebaseError);
+                @Override
+                public void onAuthenticationError(FirebaseError firebaseError) {
+                    System.out.println("An error has occurred" + firebaseError);
 
-                    }
-                });
+                }
+            });
 
-            } else {
-                ref.unauth();
-            }
+        } else {
+            ref.unauth();
+        }
 
     }
 
@@ -411,16 +418,16 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.Connec
                     Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
                     final UserDetails details = new UserDetails();
-                    details.name = currentPerson.getDisplayName();
+                    details.setName(currentPerson.getDisplayName());
                     details.email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-                    details.accessToken = token;
+                    details.setAccessToken(token);
 
                     userRef.child(currentPerson.getId()).setValue(details);
 
                     String uid = currentPerson.getId();
 
                     editor.putString(Constants.USER_TOKEN, uid);
-                    editor.putString(Constants.USER_NAME,currentPerson.getDisplayName());
+                    editor.putString(Constants.USER_NAME, currentPerson.getDisplayName());
                     editor.putString(Constants.USER_EMAIL, Plus.AccountApi.getAccountName(mGoogleApiClient));
 
                     editor.apply();
@@ -475,7 +482,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.Connec
     }
 
 
-    public GoogleApiClient buildApiClient(){
+    public GoogleApiClient buildApiClient() {
         return new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -490,9 +497,9 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.Connec
         //we wanna get the token here when the baga connects
 
         try {
-            loginAndGetToken ();
+            loginAndGetToken();
             Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

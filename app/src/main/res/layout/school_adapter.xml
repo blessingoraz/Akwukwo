@@ -1,79 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E9E9E9">
+    android:background="#E9E9E9"
+    android:orientation="vertical">
 
     <android.support.v7.widget.CardView
-        android:background="#20ffffff"
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="15dp"
         android:id="@+id/detailsCardView"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
-        app:cardElevation="5dp">
+        android:layout_marginTop="15dp"
+        android:background="#20ffffff"
+        app:cardElevation="6dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/name_from_firebase"
-                android:layout_weight="7"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="School Name"
-                android:textSize="18sp"
-                android:layout_marginTop="30dp"
-                android:paddingLeft="25dp"
-                android:textColor="#212121"/>
-
             <ImageView
                 android:id="@+id/image_from_firebase"
-                android:layout_weight="3"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
-                android:src="@drawable/pic"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:layout_weight="3"
+                android:src="@drawable/pic" />
+
+            <TextView
+                android:id="@+id/name_from_firebase"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="6"
+                android:paddingLeft="10dp"
+                android:text="School Name"
+                android:textColor="@color/colorSchoolName"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/vision"
-            android:layout_width="330dp"
-            android:layout_height="wrap_content"
-            android:text="Cards provide context and an entry point to more robust information and views, and their content and quantity can vary greatly. "
-            android:layout_marginTop="90dp"
-            android:paddingLeft="25dp"
-            android:textColor="#212121"
-            android:lineSpacingExtra="5dp"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/delete"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Delete"
-            android:textColor="#5C6BC0"
-            android:textStyle="bold"
-            android:layout_marginTop="170dp"
-            android:layout_marginLeft="280dp"/>
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit"
-            android:textColor="#5C6BC0"
-            android:textStyle="bold"
-            android:layout_marginTop="170dp"
-            android:layout_marginLeft="220dp"/>
+            <!--address of school should be here-->
+            <TextView
+                android:id="@+id/vision"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="40dp"
+                android:lineSpacingExtra="5dp"
+                android:paddingLeft="25dp"
+                android:text="Cards provide context and a "
+                android:textColor="#A0A0A5"
+                android:textSize="13sp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="125dp"
+                android:layout_marginTop="65dp"
+                android:text="N35000 - N40000" />
+
+            <ImageView
+                android:id="@+id/like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/ic_favorite_black_24dp" />
+
+        </RelativeLayout>
+
+        <!--<TextView-->
+        <!--android:id="@+id/delete"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Delete"-->
+        <!--android:textColor="#5C6BC0"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_marginTop="170dp"-->
+        <!--android:layout_marginLeft="280dp"/>-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/edit"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Edit"-->
+        <!--android:textColor="#5C6BC0"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_marginTop="170dp"-->
+        <!--android:layout_marginLeft="220dp"/>-->
 
     </android.support.v7.widget.CardView>
-
 
 </LinearLayout>

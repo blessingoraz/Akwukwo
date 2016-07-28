@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.firebase.client.core.Context;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -19,11 +17,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.w3c.dom.Text;
-
-import hk.ust.cse.comp107x.schoolapp.LandingPages.LoginActivity;
-import hk.ust.cse.comp107x.schoolapp.LandingPages.MainActivity;
-import hk.ust.cse.comp107x.schoolapp.Singletons.Utils;
+import hk.ust.cse.comp107x.schoolapp.Views.ViewPageActivity;
+import hk.ust.cse.comp107x.schoolapp.tool.Constants;
 
 public class DetailOfEachSchool extends FragmentActivity implements OnMapReadyCallback {
 
@@ -51,23 +46,23 @@ public class DetailOfEachSchool extends FragmentActivity implements OnMapReadyCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_of_each_school);
 
-        mSchoolImage = (ImageView) findViewById(R.id.school_image_from_firebase);
-        mSchoolName = (TextView) findViewById(R.id.school_name_from_firebase);
-        mSchoolMotto = (TextView) findViewById(R.id.school_motto_from_firebase);
-        mSchoolAddress = (TextView) findViewById(R.id.school_address_from_firebase);
-        mSchoolTelephone = (TextView) findViewById(R.id.school_phone_number_from_firebase);
-        mSchoolFees = (TextView) findViewById(R.id.school_fees_range_from_firebase);
-        mSchoolEmail = (TextView) findViewById(R.id.school_email_from_firebase);
-
-        pref = getSharedPreferences("SchoolDetails", android.content.Context.MODE_PRIVATE);
-
-        mSchoolImage.setImageBitmap(decodeBase64(pref.getString(Constants.SCHOOL_IMAGE, "")));
-        mSchoolName.setText(pref.getString(Constants.SCHOOL_NAME, ""));
-        mSchoolMotto.setText(pref.getString(Constants.SCHOOL_MOTTO, ""));
-        mSchoolAddress.setText(pref.getString(Constants.SCHOOL_DETAILED_ADDRESS, "")+ ", " + pref.getString(Constants.SCHOOL_ADDRESS, ""));
-        mSchoolTelephone.setText(pref.getString(Constants.SCHOOL_PHONE, ""));
-        mSchoolFees.setText(pref.getString(Constants.SCHOOL_FFES, ""));
-        mSchoolEmail.setText(pref.getString(Constants.SCHOOL_EMAIL, ""));
+//        mSchoolImage = (ImageView) findViewById(R.id.school_image_from_firebase);
+//        mSchoolName = (TextView) findViewById(R.id.school_name_from_firebase);
+//        mSchoolMotto = (TextView) findViewById(R.id.school_motto_from_firebase);
+//        mSchoolAddress = (TextView) findViewById(R.id.school_address_from_firebase);
+//        mSchoolTelephone = (TextView) findViewById(R.id.school_phone_number_from_firebase);
+//        mSchoolFees = (TextView) findViewById(R.id.school_fees_range_from_firebase);
+//        mSchoolEmail = (TextView) findViewById(R.id.school_email_from_firebase);
+//
+//        pref = getSharedPreferences("SchoolDetails", android.content.Context.MODE_PRIVATE);
+//
+//        mSchoolImage.setImageBitmap(decodeBase64(pref.getString(Constants.SCHOOL_IMAGE, "")));
+//        mSchoolName.setText(pref.getString(Constants.SCHOOL_NAME, ""));
+//        mSchoolMotto.setText(pref.getString(Constants.SCHOOL_MOTTO, ""));
+//        mSchoolAddress.setText(pref.getString(Constants.SCHOOL_DETAILED_ADDRESS, "")+ ", " + pref.getString(Constants.SCHOOL_ADDRESS, ""));
+//        mSchoolTelephone.setText(pref.getString(Constants.SCHOOL_PHONE, ""));
+//        mSchoolFees.setText(pref.getString(Constants.SCHOOL_FFES, ""));
+//        mSchoolEmail.setText(pref.getString(Constants.SCHOOL_EMAIL, ""));
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -81,15 +76,6 @@ public class DetailOfEachSchool extends FragmentActivity implements OnMapReadyCa
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
