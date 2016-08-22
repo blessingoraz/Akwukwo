@@ -6,12 +6,16 @@
     android:layout_height="match_parent" android:fitsSystemWindows="true"
     tools:context="hk.ust.cse.comp107x.schoolapp.ListOfMySchhols">
 
-    <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
-        android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
+    <android.support.design.widget.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-        <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
-            android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
-            android:background="#82a1b0" app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar">
+
+        </include>
 
     </android.support.design.widget.AppBarLayout>
 
